@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="CityMap" uuid="ba886027-6f6d-4aaf-8652-d952fef46d76">
+      <secret-storage>master_key</secret-storage>
+      <user-name>Edi</user-name>
+      <schema-pattern>postgres.*</schema-pattern>
+      <default-schemas>postgres.*</default-schemas>
+    </data-source>
+  </component>
+</project>

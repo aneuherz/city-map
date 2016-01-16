@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+    <persistence-unit name="CityMap" transaction-type="RESOURCE_LOCAL">
+        <provider>
+            org.eclipse.persistence.jpa.PersistenceProvider
+        </provider>
+        <class>entities.TicketType</class>
+        <class>entities.TicketTypePrice</class>
+        <class>entities.Delay</class>
+        <class>entities.Line</class>
+        <class>entities.Ride</class>
+        <class>entities.RideOnDay</class>
+        <class>entities.RideType</class>
+        <class>entities.Station</class>
+        <class>entities.Stop</class>
+        <class>entities.Vehicle</class>
+        <properties>
+            <property name="javax.persistence.jdbc.driver"
+                      value="org.postgresql.Driver"/>
+
+            <property name="javax.persistence.jdbc.url"
+                      value="jdbc:postgresql://127.0.0.1:5432/postgres"/>
+
+            <property name="javax.persistence.jdbc.user" value="Edi"/>
+            <property name="javax.persistence.jdbc.password" value=""/>
+
+            <!-- log at warn level (default : ERROR) -->
+            <property name="javax.persistence.logging.level" value="WARNING"/>
+
+        </properties>
+    </persistence-unit>
+</persistence>
