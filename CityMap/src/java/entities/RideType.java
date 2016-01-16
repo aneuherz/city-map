@@ -45,6 +45,7 @@ public class RideType {
     }
 
     public void addRide(Ride ride) {
+
         this.rides.add(ride);
         if (ride.getRideType() != this) {
             ride.setRideType(this);
