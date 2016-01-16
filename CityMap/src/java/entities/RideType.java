@@ -26,7 +26,6 @@ public class RideType {
     public RideType(int ridetype_id, String ridetype) {
         this.ridetype_id = ridetype_id;
         this.ridetype = ridetype;
-
     }
 
     public int getRidetype_id() {
