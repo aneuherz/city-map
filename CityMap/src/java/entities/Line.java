@@ -8,7 +8,7 @@ import java.util.List;
  */
 
 @Entity
-@Table(schema = "LADARPHI15")
+@Table(schema = "CITYMAP")
 public class Line {
     @Id
     private int line_id;
@@ -18,7 +18,7 @@ public class Line {
     private int vehicle_id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "VEHICLE_ID")
+    @PrimaryKeyJoinColumn(name = "VEHICLE_ID")
     private Vehicle vehicle;
 
     @OneToMany(mappedBy = "line")

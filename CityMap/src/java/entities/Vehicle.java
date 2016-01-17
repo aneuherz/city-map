@@ -5,7 +5,7 @@ import java.util.List;
 
 
 @Entity
-@Table(schema = "LADARPHI15")
+@Table(schema = "CITYMAP")
 public class Vehicle {
     @Id
     private int vehicle_id;

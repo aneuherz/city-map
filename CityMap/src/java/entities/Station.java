@@ -8,7 +8,7 @@ import java.util.List;
  */
 
 @Entity
-@Table(schema="LADARPHI15")
+@Table(schema="CITYMAP")
 public class Station {
     @Id
     private int station_id;

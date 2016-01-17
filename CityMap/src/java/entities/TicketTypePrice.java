@@ -9,7 +9,7 @@ import java.sql.Date;
 
 @Entity
 @IdClass(TicketTypePrice.TicketTypeId.class)
-@Table(schema = "LADARPHI15")
+@Table(schema = "TICKETS")
 public class TicketTypePrice {
 
     @Id
@@ -21,7 +21,7 @@ public class TicketTypePrice {
     private long baseprice;
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="TICKETTYPE_ID")
+    @PrimaryKeyJoinColumn(name="TICKETTYPE_ID", referencedColumnName = "TICKETTYPE_ID")
     private TicketType ticketType;
 
     protected TicketTypePrice() {

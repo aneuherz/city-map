@@ -5,7 +5,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(schema = "LADARPHI15")
+@Table(schema = "TICKETS")
 public class TicketType {
 
     @Id
@@ -48,9 +48,6 @@ public class TicketType {
         this.type = type;
     }
 
-    public void setType(String TicketTypes) {
-        this.type = type;
-    }
 
     public String toString() {
         return "entities.TicketType id: " + getTickettype_id() + " description: " + getType();

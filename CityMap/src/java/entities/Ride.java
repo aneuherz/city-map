@@ -1,19 +1,13 @@
 package entities;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 /**
  * Created by Edi on 25/11/15.
  */
 @Entity
-@Table(schema = "LADARPHI15")
+@Table(schema = "CITYMAP")
 public class Ride {
     @Id
     private int ride_id;
@@ -28,11 +22,11 @@ public class Ride {
     private List<Stop> stations;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "RIDETYPE_ID")
+    @PrimaryKeyJoinColumn(name = "RIDETYPE_ID")
     private RideType rideType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "LINE_ID")
+    @PrimaryKeyJoinColumn(name = "LINE_ID")
     private Line line;
 
     @OneToMany(mappedBy = "ride")

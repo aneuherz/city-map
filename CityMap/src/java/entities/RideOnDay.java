@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.sql.Date;
 
 @Entity
-@Table(schema = "LADARPHI15")
+@Table(schema = "CITYMAP")
 @IdClass(RideOnDay.RideOnDayId.class)
 public class RideOnDay {
     @Id
@@ -18,7 +18,8 @@ public class RideOnDay {
     private Delay delay;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "RIDE_ID")
+
+    @PrimaryKeyJoinColumn(name="Ride_ID", referencedColumnName = "Ride_ID")
     private Ride ride;
 
     protected RideOnDay() {

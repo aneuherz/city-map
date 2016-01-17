@@ -8,7 +8,7 @@ import java.sql.Date;
  */
 
 @Entity
-@Table(schema = "LADARPHI15")
+@Table(schema = "CITYMAP")
 public class Delay {
     @Id
     private int ride_id;
@@ -21,7 +21,8 @@ public class Delay {
     private String reason;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "RIDE_ID")
+    @PrimaryKeyJoinColumns({@PrimaryKeyJoinColumn(name = "RIDE_ID", referencedColumnName = "RIDE_ID"),
+            @PrimaryKeyJoinColumn(name = "ridestarttime", referencedColumnName = "ridestarttime")})
     private RideOnDay rideOnDay;
 
     protected Delay() {

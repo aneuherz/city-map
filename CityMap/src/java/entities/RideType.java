@@ -10,7 +10,7 @@ import java.util.List;
  * Created by Edi on 25/11/15.
  */
 @Entity
-@Table(schema = "LADARPHI15")
+@Table(schema = "CITYMAP")
 public class RideType {
     @Id
     private int ridetype_id;

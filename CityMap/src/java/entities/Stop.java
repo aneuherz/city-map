@@ -7,7 +7,7 @@ import java.io.Serializable;
  * Created by Edi on 25/11/15.
  */
 @Entity
-@Table(schema = "LADARPHI15")
+@Table(schema = "CITYMAP")
 @IdClass(Stop.StopId.class)
 public class Stop {
 
