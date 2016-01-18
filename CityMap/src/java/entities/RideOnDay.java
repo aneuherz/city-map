@@ -9,7 +9,8 @@ import java.sql.Date;
 @IdClass(RideOnDay.RideOnDayId.class)
 public class RideOnDay {
     @Id
-    private int ride_id;
+    @Column(name = "ride_ID")
+    private int rideID;
 
     @Id
     private Date ridestarttime;
@@ -25,17 +26,17 @@ public class RideOnDay {
     protected RideOnDay() {
     }
 
-    public RideOnDay(int ride_id, Date ridestarttime) {
-        this.ride_id = ride_id;
+    public RideOnDay(int rideID, Date ridestarttime) {
+        this.rideID = rideID;
         this.ridestarttime = ridestarttime;
     }
 
-    public int getRide_id() {
-        return ride_id;
+    public int getRideID() {
+        return rideID;
     }
 
-    public void setRide_id(int ride_id) {
-        this.ride_id = ride_id;
+    public void setRideID(int rideID) {
+        this.rideID = rideID;
     }
 
     public Date getRidestarttime() {
@@ -67,7 +68,7 @@ public class RideOnDay {
     }
 
     static class RideOnDayId implements Serializable {
-        int ride_id;
+        int rideID;
         Date ridestarttime;
 
     }

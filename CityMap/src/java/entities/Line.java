@@ -11,11 +11,12 @@ import java.util.List;
 @Table(schema = "CITYMAP")
 public class Line {
     @Id
-    private int line_id;
+    @Column(name = "line_id")
+    private int lineID;
 
     private String description;
 
-    private int vehicle_id;
+    private int vehicleID;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn(name = "VEHICLE_ID")
@@ -27,10 +28,10 @@ public class Line {
     protected Line() {
     }
 
-    public Line(int line_id, String description, int vehicle_id) {
-        this.line_id = line_id;
+    public Line(int lineID, String description, int vehicleID) {
+        this.lineID = lineID;
         this.description = description;
-        this.vehicle_id = vehicle_id;
+        this.vehicleID = vehicleID;
     }
 
     public void addRide(Ride ride) {
@@ -40,12 +41,12 @@ public class Line {
         }
     }
 
-    public int getLine_id() {
-        return line_id;
+    public int getLineID() {
+        return lineID;
     }
 
-    public void setLine_id(int line_id) {
-        this.line_id = line_id;
+    public void setLineID(int lineID) {
+        this.lineID = lineID;
     }
 
     public String getDescription() {
@@ -56,12 +57,12 @@ public class Line {
         this.description = description;
     }
 
-    public int getVehicle_id() {
-        return vehicle_id;
+    public int getVehicleID() {
+        return vehicleID;
     }
 
-    public void setVehicle_id(int vehicle_id) {
-        this.vehicle_id = vehicle_id;
+    public void setVehicleID(int vehicleID) {
+        this.vehicleID = vehicleID;
     }
 
     public Vehicle getVehicle() {

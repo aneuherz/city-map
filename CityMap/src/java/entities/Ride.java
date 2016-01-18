@@ -10,13 +10,14 @@ import java.util.List;
 @Table(schema = "CITYMAP")
 public class Ride {
     @Id
-    private int ride_id;
+    @Column(name = "ride_id")
+    private int rideID;
 
     private String description;
-
-    private int line_id;
-
-    private int ridetype_id;
+    @Column(name = "line_id")
+    private int lineID;
+    @Column(name = "ridetype_id")
+    private int rideTypeID;
 
     @OneToMany(mappedBy = "ride")
     private List<Stop> stations;
@@ -35,11 +36,11 @@ public class Ride {
     protected Ride() {
     }
 
-    public Ride(int ride_id, String description, int line_id, int ridetype_id) {
-        this.ride_id = ride_id;
+    public Ride(int rideID, String description, int lineID, int ridetypeID) {
+        this.rideID = rideID;
         this.description = description;
-        this.line_id = line_id;
-        this.ridetype_id = ridetype_id;
+        this.lineID = lineID;
+        this.rideTypeID = ridetypeID;
     }
 
     public void addRideOnDay(RideOnDay rideOnDay) {
@@ -49,12 +50,12 @@ public class Ride {
         }
     }
 
-    public int getRide_id() {
-        return ride_id;
+    public int getRideID() {
+        return rideID;
     }
 
-    public void setRide_id(int ride_id) {
-        this.ride_id = ride_id;
+    public void setRideID(int rideID) {
+        this.rideID = rideID;
     }
 
     public String getDescription() {
@@ -65,20 +66,20 @@ public class Ride {
         this.description = description;
     }
 
-    public int getLine_id() {
-        return line_id;
+    public int getLineID() {
+        return lineID;
     }
 
-    public void setLine_id(int line_id) {
-        this.line_id = line_id;
+    public void setLineID(int lineID) {
+        this.lineID = lineID;
     }
 
-    public int getRidetype_id() {
-        return ridetype_id;
+    public int getRideTypeID() {
+        return rideTypeID;
     }
 
-    public void setRidetype_id(int ridetype_id) {
-        this.ridetype_id = ridetype_id;
+    public void setRideTypeID(int rideTypeID) {
+        this.rideTypeID = rideTypeID;
     }
 
     public List<Stop> getStations() {

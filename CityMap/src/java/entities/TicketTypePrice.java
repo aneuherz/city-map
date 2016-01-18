@@ -13,7 +13,8 @@ import java.sql.Date;
 public class TicketTypePrice {
 
     @Id
-    private int tickettype_id;
+    @Column(name = "TicketType_ID")
+    private int ticketTypeID;
 
     @Id
     private Date validfrom;
@@ -27,22 +28,22 @@ public class TicketTypePrice {
     protected TicketTypePrice() {
     }
 
-    public TicketTypePrice(int tickettype_id, Date validfrom, long baseprice) {
-        this.tickettype_id = tickettype_id;
+    public TicketTypePrice(int ticketTypeID, Date validfrom, long baseprice) {
+        this.ticketTypeID = ticketTypeID;
         this.validfrom = validfrom;
         this.baseprice = baseprice;
     }
 
     public String toString() {
-        return "entities.TicketType_FK id: " + getTickettype_id() + " valid from: " + getValidfrom();
+        return "entities.TicketType_FK id: " + getTicketTypeID() + " valid from: " + getValidfrom();
     }
 
-    public int getTickettype_id() {
-        return tickettype_id;
+    public int getTicketTypeID() {
+        return ticketTypeID;
     }
 
-    public void setTickettype_id(int id) {
-        this.tickettype_id = id;
+    public void setTicketTypeID(int id) {
+        this.ticketTypeID = id;
     }
 
     public Date getValidfrom() {
@@ -62,7 +63,7 @@ public class TicketTypePrice {
     }
 
     static class TicketTypeId implements Serializable {
-        int tickettype_id;
+        int ticketTypeID;
         Date validfrom;
 
     }

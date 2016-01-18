@@ -12,10 +12,12 @@ import java.io.Serializable;
 public class Stop {
 
     @Id
-    private long station_id;
+    @Column(name = "station_ID")
+    private long stationID;
 
     @Id
-    private long ride_id;
+    @Column(name = "ride_ID")
+    private long rideID;
 
     @ManyToOne
     @PrimaryKeyJoinColumn(name = "RIDE_ID", referencedColumnName = "RIDE_ID")
@@ -25,7 +27,8 @@ public class Stop {
     @PrimaryKeyJoinColumn(name = "STATION_ID", referencedColumnName = "STATION_ID")
     private Station station;
 
-    private int halt_no;
+    @Column(name = "halt_no")
+    private int haltNo;
 
     private int waittime;
 
@@ -34,20 +37,20 @@ public class Stop {
     protected Stop() {
     }
 
-    public long getStation_id() {
-        return station_id;
+    public long getStationID() {
+        return stationID;
     }
 
-    public void setStation_id(long station_id) {
-        this.station_id = station_id;
+    public void setStationID(long stationID) {
+        this.stationID = stationID;
     }
 
-    public long getRide_id() {
-        return ride_id;
+    public long getRideID() {
+        return rideID;
     }
 
-    public void setRide_id(long ride_id) {
-        this.ride_id = ride_id;
+    public void setRideID(long rideID) {
+        this.rideID = rideID;
     }
 
     public Ride getRide() {
@@ -66,12 +69,12 @@ public class Stop {
         this.station = station;
     }
 
-    public int getHalt_no() {
-        return halt_no;
+    public int getHaltNo() {
+        return haltNo;
     }
 
-    public void setHalt_no(int halt_no) {
-        this.halt_no = halt_no;
+    public void setHaltNo(int haltNo) {
+        this.haltNo = haltNo;
     }
 
     public int getWaittime() {
@@ -91,8 +94,8 @@ public class Stop {
     }
 
     static class StopId implements Serializable {
-        long station_id;
-        long ride_id;
+        long stationID;
+        long rideID;
     }
 
 

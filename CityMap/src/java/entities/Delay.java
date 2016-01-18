@@ -11,7 +11,8 @@ import java.sql.Date;
 @Table(schema = "CITYMAP")
 public class Delay {
     @Id
-    private int ride_id;
+    @Column(name = "ride_id")
+    private int rideID;
 
     @Id
     private Date ridestarttime;
@@ -28,19 +29,19 @@ public class Delay {
     protected Delay() {
     }
 
-    public Delay(int ride_id, Date ridestarttime, int delayinminutes, String reason) {
-        this.ride_id = ride_id;
+    public Delay(int rideID, Date ridestarttime, int delayinminutes, String reason) {
+        this.rideID = rideID;
         this.ridestarttime = ridestarttime;
         this.delayinminutes = delayinminutes;
         this.reason = reason;
     }
 
-    public int getRide_id() {
-        return ride_id;
+    public int getRideID() {
+        return rideID;
     }
 
-    public void setRide_id(int ride_id) {
-        this.ride_id = ride_id;
+    public void setRideID(int rideID) {
+        this.rideID = rideID;
     }
 
     public Date getRidestarttime() {

@@ -1,9 +1,6 @@
 package entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -13,7 +10,8 @@ import java.util.List;
 @Table(schema = "CITYMAP")
 public class RideType {
     @Id
-    private int ridetype_id;
+    @Column(name = "rideType_ID")
+    private int ridetypeID;
 
     private String ridetype;
 
@@ -23,17 +21,17 @@ public class RideType {
     protected RideType() {
     }
 
-    public RideType(int ridetype_id, String ridetype) {
-        this.ridetype_id = ridetype_id;
+    public RideType(int ridetypeID, String ridetype) {
+        this.ridetypeID = ridetypeID;
         this.ridetype = ridetype;
     }
 
-    public int getRidetype_id() {
-        return ridetype_id;
+    public int getRidetypeID() {
+        return ridetypeID;
     }
 
-    public void setRidetype_id(int ridetype_id) {
-        this.ridetype_id = ridetype_id;
+    public void setRidetypeID(int ridetypeID) {
+        this.ridetypeID = ridetypeID;
     }
 
     public String getRidetype() {

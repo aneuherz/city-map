@@ -9,7 +9,8 @@ import java.util.List;
 public class TicketType {
 
     @Id
-    private int tickettype_id;
+    @Column(name = "TicketType_ID")
+    private int ticketTypeID;
 
     @Enumerated(EnumType.STRING)
     private TicketTypeEnum type;
@@ -20,8 +21,8 @@ public class TicketType {
     protected TicketType() {
     }
 
-    public TicketType(int tickettype_id, TicketTypeEnum type) {
-        this.tickettype_id = tickettype_id;
+    public TicketType(int ticketTypeID, TicketTypeEnum type) {
+        this.ticketTypeID = ticketTypeID;
         this.type = type;
     }
 
@@ -32,12 +33,12 @@ public class TicketType {
         }
     }
 
-    public int getTickettype_id() {
-        return tickettype_id;
+    public int getTicketTypeID() {
+        return ticketTypeID;
     }
 
-    public void setTickettype_id(int ticketType) {
-        this.tickettype_id = ticketType;
+    public void setTicketTypeID(int ticketType) {
+        this.ticketTypeID = ticketType;
     }
 
     public TicketTypeEnum getType() {
@@ -50,7 +51,7 @@ public class TicketType {
 
 
     public String toString() {
-        return "entities.TicketType id: " + getTickettype_id() + " description: " + getType();
+        return "entities.TicketType_id: " + getTicketTypeID() + " description: " + getType();
     }
 
     public List<TicketTypePrice> getTicketTypePrices() {

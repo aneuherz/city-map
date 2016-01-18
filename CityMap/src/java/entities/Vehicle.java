@@ -8,7 +8,7 @@ import java.util.List;
 @Table(schema = "CITYMAP")
 public class Vehicle {
     @Id
-    private int vehicle_id;
+    private int vehicleID;
 
     private String description;
 
@@ -23,8 +23,8 @@ public class Vehicle {
     protected Vehicle() {
     }
 
-    public Vehicle(int vehicle_id, String description) {
-        this.vehicle_id = vehicle_id;
+    public Vehicle(int vehicleID, String description) {
+        this.vehicleID = vehicleID;
         this.description = description;
     }
 
@@ -35,12 +35,12 @@ public class Vehicle {
         }
     }
 
-    public int getVehicle_id() {
-        return vehicle_id;
+    public int getVehicleID() {
+        return vehicleID;
     }
 
-    public void setVehicle_id(int vehicle_id) {
-        this.vehicle_id = vehicle_id;
+    public void setVehicleID(int vehicleID) {
+        this.vehicleID = vehicleID;
     }
 
     public String getDescription() {

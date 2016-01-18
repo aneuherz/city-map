@@ -11,7 +11,8 @@ import java.util.List;
 @Table(schema="CITYMAP")
 public class Station {
     @Id
-    private int station_id;
+    @Column(name = "station_ID")
+    private int stationID;
 
     private String description;
 
@@ -25,9 +26,9 @@ public class Station {
     public void addRide(Ride ride, int halt_no, int timetonextstop, int waittime) {
         Stop stop = new Stop();
         stop.setRide(ride);
-        stop.setHalt_no(halt_no);
-        stop.setRide_id(ride.getRide_id());
-        stop.setStation_id(this.getStation_id());
+        stop.setHaltNo(halt_no);
+        stop.setRideID(ride.getRideID());
+        stop.setStationID(this.getStationID());
         stop.setStation(this);
         stop.setTimetonextstop(timetonextstop);
         stop.setWaittime(waittime);
@@ -37,12 +38,12 @@ public class Station {
         ride.getStations().add(stop);
     }
 
-    public int getStation_id() {
-        return station_id;
+    public int getStationID() {
+        return stationID;
     }
 
-    public void setStation_id(int station_id) {
-        this.station_id = station_id;
+    public void setStationID(int stationID) {
+        this.stationID = stationID;
     }
 
     public String getDescription() {
@@ -72,8 +73,8 @@ public class Station {
     protected Station() {
     }
 
-    public Station(int station_id, String description) {
-        this.station_id = station_id;
+    public Station(int stationID, String description) {
+        this.stationID = stationID;
         this.description = description;
     }
 
