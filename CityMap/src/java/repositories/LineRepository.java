@@ -17,11 +17,11 @@ public class LineRepository extends persistence.Repository<Line>
 
     public Line create (int line_id, String description, int vehicle_id)
     {
-        Line emp = new Line (line_id, description, vehicle_id);
+        Line line = new Line (line_id, description, vehicle_id);
 
-        entityManager.persist (emp);
+        entityManager.persist (line);
 
-        return emp;
+        return line;
     }
 
     void reset ()
@@ -30,7 +30,7 @@ public class LineRepository extends persistence.Repository<Line>
         //Persistence.resetSequence (schema, sequence);
     }
 
-    static final String schema   = "ladarphi15";
+    static final String schema   = "citymap";
     static final String table    = "line";
     //static final String sequence = "employee_id_seq";
 

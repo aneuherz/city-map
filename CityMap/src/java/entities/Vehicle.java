@@ -1,6 +1,12 @@
 package entities;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 
@@ -16,8 +22,8 @@ public class Vehicle {
     private List<Line> lines;
 
     @ManyToMany
-    @JoinTable(joinColumns = @JoinColumn(name = "VEHICLE_ID")
-            , inverseJoinColumns = @JoinColumn(name = "STATION_ID"))
+    @JoinTable(joinColumns = @JoinColumn(name = "VEHICLE_ID"),
+            inverseJoinColumns = @JoinColumn(name = "STATION_ID"))
     private List<Station> stations;
 
     protected Vehicle() {

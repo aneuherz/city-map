@@ -1,27 +1,27 @@
 package repositories;
 
-import entities.Ride;
+import entities.RideType;
 import spize.persistence.Persistence;
 
 /**
  * Created by Edi on 10/01/16.
  */
-public class RideRepository extends persistence.Repository<Ride>
+public class RideTypeRepository extends persistence.Repository<RideType>
         implements persistence.IRepository {
 
 
-    public RideRepository() {
-        super(Ride.class);
+    public RideTypeRepository() {
+        super(RideType.class);
     }
 
 
-    public Ride create (int ride_id, String description, int line_id, int ridetype_id)
+    public RideType create (int ridetypeID, String ridetype)
     {
-        Ride ride = new Ride (ride_id, description, line_id, ridetype_id);
+        RideType rideType = new RideType (ridetypeID, ridetype);
 
-        entityManager.persist (ride);
+        entityManager.persist (rideType);
 
-        return ride;
+        return rideType;
     }
 
     void reset ()
@@ -31,7 +31,7 @@ public class RideRepository extends persistence.Repository<Ride>
     }
 
     static final String schema   = "citymap";
-    static final String table    = "ride";
+    static final String table    = "ridetype";
     //static final String sequence = "employee_id_seq";
 
 }

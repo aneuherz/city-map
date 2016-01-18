@@ -10,7 +10,7 @@ import javax.persistence.EntityManager;
 public class Persistence extends spize.persistence.Persistence
 {
 
-    public static final String persistenceUnit = "company";
+    public static final String persistenceUnit = "citymap";
 
 
     public static EntityManager connect ()

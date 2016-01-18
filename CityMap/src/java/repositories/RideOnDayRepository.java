@@ -1,6 +1,6 @@
 package repositories;
 
-import entities.Delay;
+import entities.RideOnDay;
 import spize.persistence.Persistence;
 
 import java.sql.Date;
@@ -8,22 +8,22 @@ import java.sql.Date;
 /**
  * Created by Edi on 10/01/16.
  */
-public class DelayRepository extends persistence.Repository<Delay>
+public class RideOnDayRepository extends persistence.Repository<RideOnDay>
         implements persistence.IRepository {
 
 
-    public DelayRepository() {
-        super(Delay.class);
+    public RideOnDayRepository() {
+        super(RideOnDay.class);
     }
 
 
-    public Delay create (int ride_id, Date ridestarttime, int delayinminutes, String reason)
+    public RideOnDay create (int ride_id, Date ridestarttime)
     {
-        Delay delay = new Delay (ride_id, ridestarttime, delayinminutes, reason);
+        RideOnDay rideOnDay = new RideOnDay (ride_id, ridestarttime);
 
-        entityManager.persist (delay);
+        entityManager.persist (rideOnDay);
 
-        return delay;
+        return rideOnDay;
     }
 
     void reset ()
@@ -33,7 +33,7 @@ public class DelayRepository extends persistence.Repository<Delay>
     }
 
     static final String schema   = "citymap";
-    static final String table    = "delay";
+    static final String table    = "rideonday";
     //static final String sequence = "employee_id_seq";
 
 }
