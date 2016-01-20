@@ -14,7 +14,8 @@ GRANT USAGE ON SCHEMA tickets TO tickets_select;
 GRANT SELECT ON ALL TABLES IN SCHEMA tickets TO tickets_select;
 
 --the JPA user should be allowed to SELECT from all tables in the schemes CITYMAP and TICKET
-GRANT citymap_select TO citymap_user;
+
+--GRANT citymap_select TO citymap_user;
 GRANT tickets_select TO citymap_user;
 
 --!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!--
