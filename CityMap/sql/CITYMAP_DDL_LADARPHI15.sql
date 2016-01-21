@@ -75,16 +75,18 @@ CREATE TABLE CITYMAP.STOP (
   --TODO: TRIGGER Halt_No
   PRIMARY KEY (Ride_ID, Halt_No));       
 
-CREATE TABLE CITYMAP.RIDEONDAY (
-  Ride_ID NUMERIC,
-  RideStartTime DATE,
-  --POSSIBLE ATTRIBUTES: Driver, 
+CREATE TABLE citymap.rideonday
+(
+  ride_id numeric,
+  ridestarttime timestamp,
+  --POSSIBLE ATTRIBUTES: Driver,
   --                     Specific Vehicle with Vehicle NUMERIC (License Plate, etc.)
-  PRIMARY KEY (Ride_ID, RideStartTime)); 
+  PRIMARY KEY (ride_id, ridestarttime)
+);
  
 CREATE TABLE CITYMAP.DELAY (
   Ride_ID NUMERIC,
-  RideStartTime DATE,
+  RideStartTime TIMESTAMP,
   DelayInMinutes NUMERIC(3),
   Reason VARCHAR(255),
   PRIMARY KEY (Ride_ID, RideStartTime)); 
@@ -153,7 +155,7 @@ ADD CONSTRAINT RIDEONDAY_FK
    FOREIGN KEY (Ride_ID)
     REFERENCES CITYMAP.RIDE (Ride_ID);
     
-               ALTER TABLE CITYMAP.DELAY
+ALTER TABLE CITYMAP.DELAY
 ADD CONSTRAINT DELAY_FK
    FOREIGN KEY (Ride_ID, RideStartTime)
-    REFERENCES CITYMAP.RIDEONDAY (Ride_ID, RideStartTime);​
+    REFERENCES CITYMAP.RIDEONDAY (Ride_ID, RideStartTime);
