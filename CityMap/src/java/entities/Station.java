@@ -8,9 +8,12 @@ import java.util.List;
  */
 
 @Entity
+@SequenceGenerator (name = "StationIdGenerator", schema = "CITYMAP",
+        sequenceName = "STATION_ID_SEQ", allocationSize = 1)
 @Table(schema="CITYMAP")
 public class Station {
     @Id
+    @GeneratedValue (generator="StationIdGenerator")
     @Column(name = "station_ID")
     private int stationID;
 

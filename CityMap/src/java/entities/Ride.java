@@ -7,9 +7,12 @@ import java.util.List;
  * Created by Edi on 25/11/15.
  */
 @Entity
+@SequenceGenerator (name = "RideIdGenerator", schema = "CITYMAP",
+        sequenceName = "RIDE_ID_SEQ", allocationSize = 1)
 @Table(schema = "CITYMAP")
 public class Ride {
     @Id
+    @GeneratedValue (generator="RideIdGenerator")
     @Column(name = "ride_id")
     private int rideID;
 

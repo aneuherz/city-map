@@ -1,19 +1,24 @@
 package entities;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.util.List;
 
 
 @Entity
+@SequenceGenerator(name = "VehicleIdGenerator", schema = "CITYMAP",
+        sequenceName = "VEHICLE_ID_SEQ", allocationSize = 1)
 @Table(schema = "CITYMAP")
 public class Vehicle {
     @Id
+    @GeneratedValue(generator="VehicleIdGenerator")
     private int vehicleID;
 
     private String description;
