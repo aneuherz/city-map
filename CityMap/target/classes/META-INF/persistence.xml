@@ -4,17 +4,25 @@
         <provider>
             org.eclipse.persistence.jpa.PersistenceProvider
         </provider>
-        <class>entity.TicketType</class>
-        <class>entity.TicketTypePrice</class>
+        <class>entities.TicketType</class>
+        <class>entities.TicketTypePrice</class>
+        <class>entities.Delay</class>
+        <class>entities.Line</class>
+        <class>entities.Ride</class>
+        <class>entities.RideOnDay</class>
+        <class>entities.RideType</class>
+        <class>entities.Station</class>
+        <class>entities.Stop</class>
+        <class>entities.Vehicle</class>
         <properties>
             <property name="javax.persistence.jdbc.driver"
                       value="org.postgresql.Driver"/>
 
             <property name="javax.persistence.jdbc.url"
-                      value="jdbc:postgresql://127.0.0.1:5432/postgres"/>
+                      value="jdbc:postgresql://localhost:5432/Uebungen"/>
 
-            <property name="javax.persistence.jdbc.user" value="Edi"/>
-            <property name="javax.persistence.jdbc.password" value=""/>
+            <property name="javax.persistence.jdbc.user" value="citymap_user"/>
+            <property name="javax.persistence.jdbc.password" value="citymap_user"/>
 
             <!-- log at warn level (default : ERROR) -->
             <property name="javax.persistence.logging.level" value="WARNING"/>

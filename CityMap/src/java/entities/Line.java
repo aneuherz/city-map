@@ -19,6 +19,7 @@ public class Line {
 
     private String description;
 
+    @Column(name = "VEHICLE_ID")
     private int vehicleID;
 
     @ManyToOne(fetch = FetchType.LAZY)

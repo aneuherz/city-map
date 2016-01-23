@@ -2,7 +2,7 @@ package entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Table(schema = "CITYMAP")
@@ -13,7 +13,9 @@ public class RideOnDay {
     private int rideID;
 
     @Id
+    @Temporal ( TemporalType.TIMESTAMP )
     private Date ridestarttime;
+
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "rideOnDay")
     private Delay delay;

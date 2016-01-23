@@ -3,7 +3,8 @@ package repositories;
 import entities.RideOnDay;
 import spize.persistence.Persistence;
 
-import java.sql.Date;
+import java.util.Date;
+
 
 /**
  * Created by Edi on 10/01/16.

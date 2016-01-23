@@ -19,10 +19,10 @@
                       value="org.postgresql.Driver"/>
 
             <property name="javax.persistence.jdbc.url"
-                      value="jdbc:postgresql://127.0.0.1:5432/postgres"/>
+                      value="jdbc:postgresql://localhost:5432/Uebungen"/>
 
-            <property name="javax.persistence.jdbc.user" value="Edi"/>
-            <property name="javax.persistence.jdbc.password" value=""/>
+            <property name="javax.persistence.jdbc.user" value="citymap_user"/>
+            <property name="javax.persistence.jdbc.password" value="citymap_user"/>
 
             <!-- log at warn level (default : ERROR) -->
             <property name="javax.persistence.logging.level" value="WARNING"/>

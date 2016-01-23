@@ -1,12 +1,17 @@
 package entities;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
+
 
 /**
  * Created by Edi on 25/11/15.
  */
-
+@NamedQuery(name="Delay.findAllDelaysByLineID",
+        query="SELECT d FROM Delay d " +
+                "JOIN d.rideOnDay rod " +
+                "JOIN rod.ride r " +
+                "WHERE r.lineID=:lineID")
 @Entity
 @Table(schema = "CITYMAP")
 public class Delay {
@@ -15,6 +20,7 @@ public class Delay {
     private int rideID;
 
     @Id
+    @Temporal ( TemporalType.TIMESTAMP )
     private Date ridestarttime;
 
     private int delayinminutes;
