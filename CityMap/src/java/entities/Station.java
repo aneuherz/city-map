@@ -81,5 +81,11 @@ public class Station {
         this.description = description;
     }
 
+    @Override
+    public boolean equals (Object o)
+    {
+        return o instanceof Station && ((Station) o).stationID == stationID;
+    }
+
 
 }

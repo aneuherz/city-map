@@ -81,4 +81,11 @@ public class Delay {
     public void setRideOnDay(RideOnDay rideOnDay) {
         this.rideOnDay = rideOnDay;
     }
+
+    @Override
+    public boolean equals (Object o)
+    {
+        return o instanceof Delay && ((Delay) o).rideID == rideID
+                && ((Delay) o).ridestarttime == ridestarttime;
+    }
 }

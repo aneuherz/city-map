@@ -76,7 +76,8 @@ public class Line {
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
 
-        if (!vehicle.getLines().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+        if (!vehicle.getLines().contains(this)) {
+            // warning this may cause performance issues if you have a large data set since this operation is O(n)
             vehicle.getLines().add(this);
         }
     }
@@ -87,5 +88,11 @@ public class Line {
 
     public void setRides(List<Ride> rides) {
         this.rides = rides;
+    }
+
+    @Override
+    public boolean equals (Object o)
+    {
+        return o instanceof Line && ((Line) o).lineID == lineID;
     }
 }

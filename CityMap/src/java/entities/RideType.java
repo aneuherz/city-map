@@ -61,5 +61,10 @@ public class RideType {
         this.rides = rides;
     }
 
+    @Override
+    public boolean equals (Object o)
+    {
+        return o instanceof RideType && ((RideType) o).ridetypeID == ridetypeID;
+    }
 
 }

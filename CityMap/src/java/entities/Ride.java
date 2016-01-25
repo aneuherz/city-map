@@ -112,7 +112,8 @@ public class Ride {
     public void setLine(Line line) {
         this.line = line;
 
-        if (!line.getRides().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+        if (!line.getRides().contains(this)) {
+            // warning this may cause performance issues if you have a large data set since this operation is O(n)
             line.getRides().add(this);
         }
     }
@@ -125,5 +126,10 @@ public class Ride {
         this.rideOnDays = rideOnDays;
     }
 
+    @Override
+    public boolean equals (Object o)
+    {
+        return o instanceof Ride && ((Ride) o).rideID == rideID;
+    }
 
 }

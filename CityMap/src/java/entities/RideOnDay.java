@@ -64,7 +64,8 @@ public class RideOnDay {
     public void setRide(Ride ride) {
         this.ride = ride;
 
-        if (!ride.getRideOnDays().contains(this)) { // warning this may cause performance issues if you have a large data set since this operation is O(n)
+        if (!ride.getRideOnDays().contains(this)) {
+            // warning this may cause performance issues if you have a large data set since this operation is O(n)
             ride.getRideOnDays().add(this);
         }
     }
@@ -73,5 +74,12 @@ public class RideOnDay {
         int rideID;
         Date ridestarttime;
 
+    }
+
+    @Override
+    public boolean equals (Object o)
+    {
+        return o instanceof RideOnDay && ((RideOnDay) o).rideID == rideID
+                && ((RideOnDay) o).ridestarttime == ridestarttime;
     }
 }

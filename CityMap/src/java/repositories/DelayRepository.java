@@ -39,11 +39,9 @@ public class DelayRepository extends persistence.Repository<Delay>
     void reset ()
     {
         Persistence.resetTable    (schema, table);
-        //Persistence.resetSequence (schema, sequence);
     }
 
     static final String schema   = "citymap";
     static final String table    = "delay";
-    //static final String sequence = "employee_id_seq";
 
 }

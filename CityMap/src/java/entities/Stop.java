@@ -98,5 +98,11 @@ public class Stop {
         long rideID;
     }
 
+    @Override
+    public boolean equals (Object o)
+    {
+        return o instanceof Stop && ((Stop) o).stationID == stationID
+                && ((Stop) o).rideID == rideID;
+    }
 
 }

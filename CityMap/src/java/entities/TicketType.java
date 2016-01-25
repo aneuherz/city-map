@@ -1,7 +1,13 @@
 package entities;
 
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
@@ -60,5 +66,10 @@ public class TicketType {
 
     public void setTicketTypePrices(List<TicketTypePrice> ticketTypePrices) {
         this.ticketTypePrices = ticketTypePrices;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof TicketType && ((TicketType) o).ticketTypeID == ticketTypeID;
     }
 }
