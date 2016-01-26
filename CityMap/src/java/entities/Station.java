@@ -1,30 +1,50 @@
 package entities;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import java.util.List;
 
 /**
  * Created by Edi on 25/11/15.
  */
 
+@NamedQuery(name = "Station.findAllStationsByRideID",
+        query = "SELECT s FROM Station s " +
+                "JOIN s.stops st " +
+                "WHERE st.rideID=:rideID")
 @Entity
-@SequenceGenerator (name = "StationIdGenerator", schema = "CITYMAP",
+@SequenceGenerator(name = "StationIdGenerator", schema = "CITYMAP",
         sequenceName = "STATION_ID_SEQ", allocationSize = 1)
-@Table(schema="CITYMAP")
+@Table(schema = "CITYMAP")
 public class Station {
     @Id
-    @GeneratedValue (generator="StationIdGenerator")
+    @GeneratedValue(generator = "StationIdGenerator")
     @Column(name = "station_ID")
     private int stationID;
 
     private String description;
 
-    @OneToMany(mappedBy="station")
-    private List<Stop> rides;
+    @OneToMany(mappedBy = "station")
+    private List<Stop> stops;
 
-    @ManyToMany( mappedBy = "stations" )
+    @ManyToMany(mappedBy = "stations")
     private List<Vehicle> vehicles;
 
+
+    protected Station() {
+    }
+
+    public Station(int stationID, String description) {
+        this.stationID = stationID;
+        this.description = description;
+    }
 
     public void addRide(Ride ride, int halt_no, int timetonextstop, int waittime) {
         Stop stop = new Stop();
@@ -36,9 +56,9 @@ public class Station {
         stop.setTimetonextstop(timetonextstop);
         stop.setWaittime(waittime);
 
-        this.rides.add(stop);
+        this.stops.add(stop);
         // Also add the association object to the employee.
-        ride.getStations().add(stop);
+        ride.getStops().add(stop);
     }
 
     public int getStationID() {
@@ -57,12 +77,12 @@ public class Station {
         this.description = description;
     }
 
-    public List<Stop> getRides() {
-        return rides;
+    public List<Stop> getStops() {
+        return stops;
     }
 
-    public void setRides(List<Stop> rides) {
-        this.rides = rides;
+    public void setStops(List<Stop> stops) {
+        this.stops = stops;
     }
 
     public List<Vehicle> getVehicles() {
@@ -73,17 +93,8 @@ public class Station {
         this.vehicles = vehicles;
     }
 
-    protected Station() {
-    }
-
-    public Station(int stationID, String description) {
-        this.stationID = stationID;
-        this.description = description;
-    }
-
     @Override
-    public boolean equals (Object o)
-    {
+    public boolean equals(Object o) {
         return o instanceof Station && ((Station) o).stationID == stationID;
     }
 

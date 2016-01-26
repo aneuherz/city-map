@@ -28,6 +28,14 @@ public class DelayRepository extends persistence.Repository<Delay>
         return delay;
     }
 
+    public Delay findByIdAndDate (int id, Date date){
+        TypedQuery<Delay> query = entityManager.createNamedQuery (
+                "Delay.findByIdAndDate", Delay.class );
+        query.setParameter ("rideID", id);
+        query.setParameter("ridestarttime", date);
+        return query.getSingleResult();
+    }
+
     public List<Delay> findAllDelaysByLineID (int lineID)
     {
         TypedQuery<Delay> query = entityManager.createNamedQuery (

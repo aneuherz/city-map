@@ -1,17 +1,34 @@
 package entities;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.PrimaryKeyJoinColumns;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 
 
 /**
  * Created by Edi on 25/11/15.
  */
-@NamedQuery(name="Delay.findAllDelaysByLineID",
-        query="SELECT d FROM Delay d " +
-                "JOIN d.rideOnDay rod " +
-                "JOIN rod.ride r " +
-                "WHERE r.lineID=:lineID")
+@NamedQueries({
+        @NamedQuery(name = "Delay.findAllDelaysByLineID",
+                query = "SELECT d FROM Delay d " +
+                        "JOIN d.rideOnDay rod " +
+                        "JOIN rod.ride r " +
+                        "WHERE r.lineID=:lineID"),
+        @NamedQuery(name = "Delay.findByIdAndDate",
+                query = "SELECT d FROM Delay d " +
+                        "WHERE d.rideID=:rideID " +
+                        "AND d.ridestarttime=:ridestarttime")
+})
 @Entity
 @Table(schema = "CITYMAP")
 public class Delay {
@@ -20,7 +37,7 @@ public class Delay {
     private int rideID;
 
     @Id
-    @Temporal ( TemporalType.TIMESTAMP )
+    @Temporal(TemporalType.TIMESTAMP)
     private Date ridestarttime;
 
     private int delayinminutes;
@@ -83,8 +100,7 @@ public class Delay {
     }
 
     @Override
-    public boolean equals (Object o)
-    {
+    public boolean equals(Object o) {
         return o instanceof Delay && ((Delay) o).rideID == rideID
                 && ((Delay) o).ridestarttime == ridestarttime;
     }

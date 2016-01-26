@@ -1,6 +1,12 @@
 package entities;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import java.util.List;
 
 /**
@@ -8,11 +14,11 @@ import java.util.List;
  */
 @Entity
 @Table(schema = "CITYMAP")
-@SequenceGenerator (name = "RideTypeIdGenerator", schema = "CITYMAP",
+@SequenceGenerator(name = "RideTypeIdGenerator", schema = "CITYMAP",
         sequenceName = "RIDETYPE_ID_SEQ", allocationSize = 1)
 public class RideType {
     @Id
-    @GeneratedValue (generator="RideTypeIdGenerator")
+    @GeneratedValue(generator = "RideTypeIdGenerator")
     @Column(name = "rideType_ID")
     private int ridetypeID;
 
@@ -62,8 +68,7 @@ public class RideType {
     }
 
     @Override
-    public boolean equals (Object o)
-    {
+    public boolean equals(Object o) {
         return o instanceof RideType && ((RideType) o).ridetypeID == ridetypeID;
     }
 

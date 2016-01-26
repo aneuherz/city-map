@@ -1,6 +1,12 @@
 package entities;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
@@ -93,16 +99,15 @@ public class Stop {
         this.timetonextstop = timetonextstop;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof Stop && ((Stop) o).stationID == stationID
+                && ((Stop) o).rideID == rideID;
+    }
+
     static class StopId implements Serializable {
         long stationID;
         long rideID;
-    }
-
-    @Override
-    public boolean equals (Object o)
-    {
-        return o instanceof Stop && ((Stop) o).stationID == stationID
-                && ((Stop) o).rideID == rideID;
     }
 
 }

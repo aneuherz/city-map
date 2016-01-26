@@ -4,6 +4,12 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import repositories.DelayRepository;
 import repositories.LineRepository;
+import repositories.RideOnDayRepository;
+import repositories.RideRepository;
+import repositories.RideTypeRepository;
+import repositories.StationRepository;
+import repositories.StopRepository;
+import repositories.VehicleRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -21,6 +27,12 @@ public abstract class DBTests {
     protected static EntityTransaction userTransaction;
     protected static DelayRepository delayRepository;
     protected static LineRepository lineRepository;
+    protected static RideRepository rideRepository;
+    protected static RideOnDayRepository rideOnDayRepository;
+    protected static RideTypeRepository rideTypeRepository;
+    protected static StationRepository stationRepository;
+    protected static StopRepository stopRepository;
+    protected static VehicleRepository vehicleRepository;
     protected static SimpleDateFormat dayAndTimeSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @BeforeClass
@@ -28,6 +40,13 @@ public abstract class DBTests {
         entityManagerFactory = Persistence.createEntityManagerFactory("CityMap");
         em = entityManagerFactory.createEntityManager();
         delayRepository = new DelayRepository();
+        lineRepository = new LineRepository();
+        rideRepository = new RideRepository();
+        rideOnDayRepository = new RideOnDayRepository();
+        rideTypeRepository = new RideTypeRepository();
+        stationRepository = new StationRepository();
+        stopRepository = new StopRepository();
+        vehicleRepository = new VehicleRepository();
         userTransaction = em.getTransaction();
 
         userTransaction.begin();

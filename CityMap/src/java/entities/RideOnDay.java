@@ -1,9 +1,36 @@
 package entities;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
 
+@NamedQueries({
+        @NamedQuery(name = "RideOnDay.findNextRide",
+                query = "SELECT rod FROM RideOnDay rod " +
+                        "JOIN rod.ride ri " +
+                        "JOIN ri.stops st " +
+                        "WHERE st.stationID=:stationID " +
+                        "AND rod.ridestarttime >= :ridestarttime " +
+                        "ORDER BY rod.ridestarttime"),
+        @NamedQuery(name = "RideOnDay.findAllRidesOnSpecificDateByLine",
+                query = "SELECT rod " +
+                        "FROM RideOnDay rod " +
+                        "JOIN rod.ride r " +
+                        "WHERE r.lineID=:lineID " +
+                        "AND rod.ridestarttime =:ridestarttime")
+})
 @Entity
 @Table(schema = "CITYMAP")
 @IdClass(RideOnDay.RideOnDayId.class)
@@ -13,7 +40,7 @@ public class RideOnDay {
     private int rideID;
 
     @Id
-    @Temporal ( TemporalType.TIMESTAMP )
+    @Temporal(TemporalType.TIMESTAMP)
     private Date ridestarttime;
 
 
@@ -22,7 +49,7 @@ public class RideOnDay {
 
     @ManyToOne(fetch = FetchType.LAZY)
 
-    @PrimaryKeyJoinColumn(name="Ride_ID", referencedColumnName = "Ride_ID")
+    @PrimaryKeyJoinColumn(name = "Ride_ID", referencedColumnName = "Ride_ID")
     private Ride ride;
 
     protected RideOnDay() {
@@ -70,16 +97,15 @@ public class RideOnDay {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof RideOnDay && ((RideOnDay) o).rideID == rideID
+                && ((RideOnDay) o).ridestarttime == ridestarttime;
+    }
+
     static class RideOnDayId implements Serializable {
         int rideID;
         Date ridestarttime;
 
-    }
-
-    @Override
-    public boolean equals (Object o)
-    {
-        return o instanceof RideOnDay && ((RideOnDay) o).rideID == rideID
-                && ((RideOnDay) o).ridestarttime == ridestarttime;
     }
 }

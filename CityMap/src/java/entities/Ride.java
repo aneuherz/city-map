@@ -1,18 +1,27 @@
 package entities;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import java.util.List;
 
 /**
  * Created by Edi on 25/11/15.
  */
 @Entity
-@SequenceGenerator (name = "RideIdGenerator", schema = "CITYMAP",
+@SequenceGenerator(name = "RideIdGenerator", schema = "CITYMAP",
         sequenceName = "RIDE_ID_SEQ", allocationSize = 1)
 @Table(schema = "CITYMAP")
 public class Ride {
     @Id
-    @GeneratedValue (generator="RideIdGenerator")
+    @GeneratedValue(generator = "RideIdGenerator")
     @Column(name = "ride_id")
     private int rideID;
 
@@ -23,7 +32,7 @@ public class Ride {
     private int rideTypeID;
 
     @OneToMany(mappedBy = "ride")
-    private List<Stop> stations;
+    private List<Stop> stops;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn(name = "RIDETYPE_ID")
@@ -40,6 +49,13 @@ public class Ride {
     }
 
     public Ride(int rideID, String description, int lineID, int ridetypeID) {
+        this.rideID = rideID;
+        this.description = description;
+        this.lineID = lineID;
+        this.rideTypeID = ridetypeID;
+    }
+
+    public Ride(String description, int lineID, int ridetypeID) {
         this.rideID = rideID;
         this.description = description;
         this.lineID = lineID;
@@ -85,12 +101,12 @@ public class Ride {
         this.rideTypeID = rideTypeID;
     }
 
-    public List<Stop> getStations() {
-        return stations;
+    public List<Stop> getStops() {
+        return stops;
     }
 
-    public void setStations(List<Stop> stations) {
-        this.stations = stations;
+    public void setStops(List<Stop> stops) {
+        this.stops = stops;
     }
 
     public RideType getRideType() {
@@ -127,8 +143,7 @@ public class Ride {
     }
 
     @Override
-    public boolean equals (Object o)
-    {
+    public boolean equals(Object o) {
         return o instanceof Ride && ((Ride) o).rideID == rideID;
     }
 

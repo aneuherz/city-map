@@ -15,23 +15,27 @@ public class LineRepository extends persistence.Repository<Line>
     }
 
 
-    public Line create (int line_id, String description, int vehicle_id)
+    public Line create (String description, int vehicle_id)
     {
-        Line line = new Line (line_id, description, vehicle_id);
+        Line line = new Line (description, vehicle_id);
 
         entityManager.persist (line);
 
         return line;
     }
 
+    public Line find (int id){
+        return entityManager.find(Line.class, id);
+    }
+
     void reset ()
     {
         Persistence.resetTable    (schema, table);
-        //Persistence.resetSequence (schema, sequence);
+        Persistence.resetSequence (schema, sequence);
     }
 
     static final String schema   = "citymap";
     static final String table    = "line";
-    //static final String sequence = "employee_id_seq";
+    static final String sequence = "LINE_ID_SEQ";
 
 }

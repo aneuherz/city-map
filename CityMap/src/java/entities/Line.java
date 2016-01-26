@@ -1,6 +1,15 @@
 package entities;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import java.util.List;
 
 /**
@@ -8,12 +17,12 @@ import java.util.List;
  */
 
 @Entity
-@SequenceGenerator (name = "LineIdGenerator", schema = "CITYMAP",
+@SequenceGenerator(name = "LineIdGenerator", schema = "CITYMAP",
         sequenceName = "LINE_ID_SEQ", allocationSize = 1)
 @Table(schema = "CITYMAP")
 public class Line {
     @Id
-    @GeneratedValue (generator="LineIdGenerator")
+    @GeneratedValue(generator = "LineIdGenerator")
     @Column(name = "line_id")
     private int lineID;
 
@@ -34,6 +43,11 @@ public class Line {
 
     public Line(int lineID, String description, int vehicleID) {
         this.lineID = lineID;
+        this.description = description;
+        this.vehicleID = vehicleID;
+    }
+
+    public Line(String description, int vehicleID) {
         this.description = description;
         this.vehicleID = vehicleID;
     }
@@ -91,8 +105,7 @@ public class Line {
     }
 
     @Override
-    public boolean equals (Object o)
-    {
+    public boolean equals(Object o) {
         return o instanceof Line && ((Line) o).lineID == lineID;
     }
 }

@@ -7,20 +7,24 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.util.List;
 
-
+@NamedQuery(name = "Vehicle.findAllVehicleByStation",
+query = "SELECT v FROM Vehicle v " +
+        "JOIN v.stations s " +
+        "WHERE s.stationID=:stationID")
 @Entity
 @SequenceGenerator(name = "VehicleIdGenerator", schema = "CITYMAP",
         sequenceName = "VEHICLE_ID_SEQ", allocationSize = 1)
 @Table(schema = "CITYMAP")
 public class Vehicle {
     @Id
-    @GeneratedValue(generator="VehicleIdGenerator")
-    @Column(name="vehicle_id")
+    @GeneratedValue(generator = "VehicleIdGenerator")
+    @Column(name = "vehicle_id")
     private int vehicleID;
 
     private String description;
