@@ -10,6 +10,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -33,10 +34,10 @@ public class Station {
     private String description;
 
     @OneToMany(mappedBy = "station")
-    private List<Stop> stops;
+    private Collection<Stop> stops = new ArrayList<Stop>();
 
     @ManyToMany(mappedBy = "stations")
-    private List<Vehicle> vehicles;
+    private Collection<Vehicle> vehicles = new ArrayList<Vehicle>();
 
 
     protected Station() {
@@ -102,7 +103,18 @@ public class Station {
         return rides;
     }
 
-    public List<Stop> getStops() {
+
+    // this method is just used for testing, as it makes the assert process easier
+    public void setStops(Collection<Stop> stops) {
+        this.stops = stops;
+    }
+
+    // this method is just used for testing, as it makes the assert process easier
+    public void setVehicles(Collection<Vehicle> vehicles) {
+        this.vehicles = vehicles;
+    }
+
+    public Collection<Stop> getStops() {
         return stops;
     }
 
@@ -122,7 +134,7 @@ public class Station {
         this.description = description;
     }
 
-    public List<Vehicle> getVehicles() {
+    public Collection<Vehicle> getVehicles() {
         return vehicles;
     }
 

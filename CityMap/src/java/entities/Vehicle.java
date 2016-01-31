@@ -95,6 +95,14 @@ public class Vehicle {
         return stations;
     }
 
+    public void setLines(Collection<Line> lines) {
+        this.lines = lines;
+    }
+
+    public void setStations(Collection<Station> stations) {
+        this.stations = stations;
+    }
+
     @Override
     public boolean equals(Object o) {
         return o instanceof Vehicle && ((Vehicle) o).vehicleID == vehicleID;

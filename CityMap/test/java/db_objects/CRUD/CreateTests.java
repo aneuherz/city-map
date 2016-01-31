@@ -11,9 +11,9 @@ import entities.Station;
 import entities.Vehicle;
 import org.junit.Assert;
 import org.junit.Test;
+import spize.persistence.Transaction;
 
 import java.text.ParseException;
-import java.util.Calendar;
 import java.util.Date;
 
 
@@ -27,12 +27,12 @@ public class CreateTests extends DBTests {
    public void createDelay() throws ParseException {
 
        //FIXME: can create delays that are not in ride and also can't find created delay in DB, like wtf?
-       userTransaction.begin();
+       Transaction.begin();
 
        RideOnDay rideOnDay = rideOnDayRepository.find(1, dateForRideOnDay());
 
        delayRepository.create(rideOnDay, 25, "Schnee");
-       userTransaction.commit();
+       Transaction.commit();
 
        Delay actual = delayRepository.findByIdAndDate(1, dateForRideOnDay());
        Assert.assertNotNull(actual);
@@ -40,22 +40,12 @@ public class CreateTests extends DBTests {
        EntityAssert.assertEquals(expected, actual);
    }
 
-    private Date dateForRideOnDay(){
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR_OF_DAY, 4);
-        cal.set(Calendar.MINUTE, 33);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-
-        return cal.getTime();
-    }
-
    @Test
    public void createLine() throws ParseException {
-       userTransaction.begin();
+       Transaction.begin();
        Vehicle vehicle = vehicleRepository.find(1);
        int id = lineRepository.create("Bus 8", vehicle).getLineID();
-       userTransaction.commit();
+       Transaction.commit();
 
        Line actual = lineRepository.find(id);
        Assert.assertNotNull(actual);
@@ -65,13 +55,13 @@ public class CreateTests extends DBTests {
 
    @Test
    public void createRide() throws ParseException {
-       userTransaction.begin();
+       Transaction.begin();
        Vehicle vehicle = vehicleRepository.find(1);
        RideOnDay rideOnDay = rideOnDayRepository.find(1, dateForRideOnDay());
        Line line = lineRepository.create("Bus 5", vehicle);
        RideType rideType = rideTypeRepository.create("Monday to Friday");
        int id = rideRepository.create("Neue Technik-Esperantoplatz", line, rideType, rideOnDay).getRideID();
-       userTransaction.commit();
+       Transaction.commit();
 
        Ride actual = rideRepository.find(id);
        Assert.assertNotNull(actual);
@@ -82,10 +72,10 @@ public class CreateTests extends DBTests {
    @Test
    public void createRideOnDay() {
        Date date = new Date();
-       userTransaction.begin();
+       Transaction.begin();
        Ride ride = rideRepository.find(1);
        int id = rideOnDayRepository.create(ride, date).getRide().getRideID();
-       userTransaction.commit();
+       Transaction.commit();
 
        RideOnDay actual = rideOnDayRepository.find(id, date);
        Assert.assertNotNull(actual);
@@ -95,9 +85,9 @@ public class CreateTests extends DBTests {
 
     @Test
     public void createRideType() {
-        userTransaction.begin();
+        Transaction.begin();
         int id = rideTypeRepository.create("Monday to Friday").getRidetypeID();
-        userTransaction.commit();
+        Transaction.commit();
 
         RideType actual = rideTypeRepository.find(id);
         Assert.assertNotNull(actual);
@@ -107,33 +97,25 @@ public class CreateTests extends DBTests {
 
     @Test
     public void createStation() {
-        userTransaction.begin();
-        int id = stationRepository.create("Jakominiplatz").getStationID();
-        userTransaction.commit();
+        Transaction.begin();
+        Station station = stationRepository.create("Jakominiplatz");
+        int id = station.getStationID();
+        Ride ride = rideRepository.find(1);
+        station.add(ride, 99, 10, 20);
+        Transaction.commit();
 
         Station actual = stationRepository.find(id);
         Assert.assertNotNull(actual);
         Station expected = new Station(id, "Jakominiplatz");
+        expected.add(ride, 99, 10, 20);
         EntityAssert.assertEquals(expected, actual);
     }
 
     @Test
-    public void createStop() {
-//        userTransaction.begin();
-//        int id = stopRepository.create("Jakominiplatz").getStationID();
-//        userTransaction.commit();
-//
-//        Station actual = stationRepository.find(id);
-//        Assert.assertNotNull(actual);
-//        Station expected = new Station(id ,"Jakominiplatz");
-//        EntityAssert.assertEquals(expected, actual);
-    }
-
-    @Test
     public void createVehicle() {
-        userTransaction.begin();
+        Transaction.begin();
         int id = vehicleRepository.create("bus").getVehicleID();
-        userTransaction.commit();
+        Transaction.commit();
 
         Vehicle actual = vehicleRepository.find(id);
         Assert.assertNotNull(actual);

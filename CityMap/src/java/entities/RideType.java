@@ -23,7 +23,7 @@ public class RideType {
     @Column(name = "rideType_ID")
     private int ridetypeID;
 
-    private String ridetype;
+    private String type;
 
     @OneToMany(mappedBy = "rideType")
     private Collection<Ride> rides = new ArrayList<Ride>();
@@ -31,13 +31,13 @@ public class RideType {
     protected RideType() {
     }
 
-    public RideType(int ridetypeID, String ridetype) {
+    public RideType(int ridetypeID, String type) {
         this.ridetypeID = ridetypeID;
-        this.ridetype = ridetype;
+        this.type = type;
     }
 
-    public RideType(String ridetype) {
-        this.ridetype = ridetype;
+    public RideType(String type) {
+        this.type = type;
     }
 
     public int getRidetypeID() {
@@ -48,12 +48,12 @@ public class RideType {
         this.ridetypeID = ridetypeID;
     }
 
-    public String getRidetype() {
-        return ridetype;
+    public String getType() {
+        return type;
     }
 
-    public void setRidetype(String ridetype) {
-        this.ridetype = ridetype;
+    public void setType(String ridetype) {
+        this.type = ridetype;
     }
 
     void add(Ride ride) {
@@ -61,6 +61,11 @@ public class RideType {
             return;
 
         rides.add(ride);
+    }
+
+    // this method is just used for testing, as it makes the assert process easier
+    public void setRides(Collection<Ride> rides) {
+        this.rides = rides;
     }
 
     void remove(Ride ride) {

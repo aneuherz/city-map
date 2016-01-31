@@ -1,6 +1,5 @@
 package db_objects;
 
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import repositories.DelayRepository;
 import repositories.LineRepository;
@@ -9,12 +8,15 @@ import repositories.RideRepository;
 import repositories.RideTypeRepository;
 import repositories.StationRepository;
 import repositories.VehicleRepository;
+import spize.persistence.Transaction;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -48,19 +50,25 @@ public abstract class DBTests {
 
         teardown();
 
-        userTransaction.begin();
+        Transaction.begin();
         List l = em.createNativeQuery("SELECT citymap.setup();").getResultList();
-        userTransaction.commit();
+        Transaction.commit();
     }
 
     public static void teardown() {
-        userTransaction.begin();
+        Transaction.begin();
         em.createNativeQuery("SELECT citymap.teardown();").getResultList();
-        userTransaction.commit();
+        Transaction.commit();
     }
 
-    @AfterClass
-    public static void close() {
-        em.close();
+    public Date dateForRideOnDay(){
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 4);
+        cal.set(Calendar.MINUTE, 33);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+
+        return cal.getTime();
     }
+
 }

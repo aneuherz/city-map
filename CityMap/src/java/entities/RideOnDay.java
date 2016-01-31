@@ -92,19 +92,6 @@ public class RideOnDay {
         ride.add(this);
     }
 
-    public void rescheduleToDay(Ride ride) {
-        if (this.ride != null) {
-            if (ride.equals(this.ride))        // no change
-                return;
-
-            this.ride.remove(this);
-
-            this.ride = null;
-        }
-
-        set(ride);
-    }
-
     @Override
     public boolean equals(Object o) {
         return o instanceof RideOnDay && ((RideOnDay) o).ride.getRideID() == ride.getRideID()

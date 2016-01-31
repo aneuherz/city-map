@@ -23,7 +23,6 @@ public class DelayRepository extends persistence.Repository<Delay>
         Delay delay = new Delay(rideOnDay, delayinminutes, reason);
 
         entityManager.persist(delay);
-
         return delay;
     }
 

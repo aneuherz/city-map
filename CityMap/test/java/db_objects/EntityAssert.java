@@ -45,7 +45,7 @@ public class EntityAssert {
     }
 
     public static void assertEquals(RideType expected, RideType actual) {
-        Assert.assertEquals(expected.getRidetype(), actual.getRidetype());
+        Assert.assertEquals(expected.getType(), actual.getType());
         Assert.assertEquals(expected.getRides(), actual.getRides());
         Assert.assertEquals(expected.getRidetypeID(), actual.getRidetypeID());
     }

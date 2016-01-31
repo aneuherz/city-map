@@ -19,7 +19,6 @@ public class LineRepository extends persistence.Repository<Line>
         Line line = new Line(description, vehicle);
 
         entityManager.persist(line);
-
         return line;
     }
 

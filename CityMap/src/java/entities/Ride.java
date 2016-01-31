@@ -62,6 +62,13 @@ public class Ride {
         rideOnDays.add(rideOnDay);
     }
 
+    public Ride(int rideID, String description, Line line, RideType ridetype) {
+        this.rideID = rideID;
+        this.description = description;
+        set(line);
+        set(ridetype);
+    }
+
     void add(RideOnDay rideOnDay) {
         if (rideOnDays.contains(rideOnDay))
             return;
@@ -135,7 +142,7 @@ public class Ride {
         return stops;
     }
 
-    public void setStops(List<Stop> stops) {
+    public void setStops(Collection<Stop> stops) {
         this.stops = stops;
     }
 
@@ -189,6 +196,11 @@ public class Ride {
         }
 
         set(line);
+    }
+
+    // this method is just used for testing, as it makes the assert process easier
+    public void setRideOnDays(Collection<RideOnDay> rideOnDays) {
+        this.rideOnDays = rideOnDays;
     }
 
     public Collection<RideOnDay> getRideOnDays() {
