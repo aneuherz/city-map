@@ -22,6 +22,11 @@ public class LineRepository extends persistence.Repository<Line>
         return line;
     }
 
+    public void removeWithAllReferences(int lineID) {
+        Line line = entityManager.merge(find(lineID));
+        entityManager.remove(line);
+    }
+
     public Line find(int id) {
         return entityManager.find(Line.class, id);
     }

@@ -29,4 +29,5 @@ public class VehicleRepository extends persistence.Repository<Vehicle>
         query.setParameter("stationID", stationID);
         return query.getResultList();
     }
+
 }

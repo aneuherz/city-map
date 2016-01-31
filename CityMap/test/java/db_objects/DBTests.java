@@ -8,12 +8,11 @@ import repositories.RideRepository;
 import repositories.RideTypeRepository;
 import repositories.StationRepository;
 import repositories.VehicleRepository;
+import spize.persistence.Persistence;
 import spize.persistence.Transaction;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -23,7 +22,9 @@ import java.util.List;
  * Created by Alexander on 24.01.2016.
  */
 public abstract class DBTests {
-    protected static EntityManagerFactory entityManagerFactory;
+    private static String persistenceUnit = "CityMap";
+    private static String user = "citymap_user";
+    private static String password = "citymap_user";
     protected static EntityManager em;
     protected static EntityTransaction userTransaction;
     protected static DelayRepository delayRepository;
@@ -37,8 +38,8 @@ public abstract class DBTests {
 
     @BeforeClass
     public static void setup() {
-        entityManagerFactory = Persistence.createEntityManagerFactory("CityMap");
-        em = entityManagerFactory.createEntityManager();
+        Persistence.connect(persistenceUnit, user, password);
+        em= Persistence.getEntityManager();
         delayRepository = new DelayRepository();
         lineRepository = new LineRepository();
         rideRepository = new RideRepository();

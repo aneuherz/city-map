@@ -70,4 +70,9 @@ public class RideOnDayRepository extends persistence.Repository<RideOnDay>
         return query.getResultList();
     }
 
+    public void removeWithAllReferences(int rideID, Date date){
+        RideOnDay rideOnDay = entityManager.merge(find(rideID, date));
+        entityManager.remove(rideOnDay);
+    }
+
 }
