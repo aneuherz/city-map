@@ -28,7 +28,7 @@ ALTER SEQUENCE citymap.ride_id_seq   OWNER TO citymap_user;
 ALTER SEQUENCE citymap.ridetype_id_seq OWNER TO citymap_user;
 ALTER SEQUENCE citymap.station_id_seq   OWNER TO citymap_user;
 ALTER SEQUENCE citymap.vehicle_id_seq  OWNER TO citymap_user;
---TEMP HACK, NO BEAUTIFUL SOLUTION
+
 GRANT INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA citymap TO citymap_user;
 GRANT EXECUTE ON FUNCTION citymap.setup() TO citymap_user;
 GRANT EXECUTE ON FUNCTION citymap.teardown() TO citymap_user;

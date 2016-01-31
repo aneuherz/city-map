@@ -26,7 +26,8 @@ public class ExceptionTests extends DBTests {
             rideTypeRepository.create(id, "Monday to Friday");
             Transaction.commit();
         } catch (Exception ex) {
-            boolean isRightException = ex.getMessage().contains("duplicate key value violates unique constraint");
+            boolean isRightException = ex.getMessage().contains("duplicate key value violates unique constraint") ||
+                    ex.getMessage().contains("Schlüsselwert verletzt Unique-Constraint");
             Assert.assertTrue(isRightException);
         }
     }
@@ -51,7 +52,8 @@ public class ExceptionTests extends DBTests {
             em.createNativeQuery("INSERT INTO tickets.tickettype VALUES (19, 'test')").getResultList();
             Transaction.commit();
         } catch (PersistenceException ex) {
-            boolean isRightException = ex.getMessage().contains("permission denied for relation tickettype");
+            boolean isRightException = ex.getMessage().contains("permission denied for relation tickettype")||
+                    ex.getMessage().contains("keine Berechtigung für Schema tickets");
             Assert.assertTrue(isRightException);
             userTransaction.rollback();
         }
@@ -66,8 +68,10 @@ public class ExceptionTests extends DBTests {
             em.remove(ride);
             Transaction.commit();
         } catch (Exception ex) {
-            boolean isRightException = ex.getMessage().contains("update or delete on table")
-                    && ex.getMessage().contains("violates foreign key constraint");
+            boolean isRightException = (ex.getMessage().contains("update or delete on table")
+                    && ex.getMessage().contains("violates foreign key constraint"))||
+                    (ex.getMessage().contains("Aktualisieren oder Löschen in Tabelle")
+                            && ex.getMessage().contains("verletzt Fremdschlüssel-Constraint "));
             Assert.assertTrue(isRightException);
         }
     }
