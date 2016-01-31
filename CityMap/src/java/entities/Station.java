@@ -19,7 +19,7 @@ import java.util.List;
 @NamedQuery(name = "Station.findAllStationsByRideID",
         query = "SELECT s FROM Station s " +
                 "JOIN s.stops st " +
-                "WHERE st.rideID=:rideID")
+                "WHERE st.ride.rideID=:rideID")
 @Entity
 @SequenceGenerator(name = "StationIdGenerator", schema = "CITYMAP",
         sequenceName = "STATION_ID_SEQ", allocationSize = 1)
@@ -100,6 +100,10 @@ public class Station {
             rides.add(ride);
         }
         return rides;
+    }
+
+    public List<Stop> getStops() {
+        return stops;
     }
 
     public int getStationID() {

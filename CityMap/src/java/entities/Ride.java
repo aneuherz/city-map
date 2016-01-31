@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -30,7 +31,7 @@ public class Ride {
     private String description;
 
     @OneToMany(mappedBy = "ride", cascade = CascadeType.PERSIST)
-    private List<Stop> stops;
+    private Collection<Stop> stops = new ArrayList<Stop>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "RIDETYPE_ID")
@@ -41,7 +42,7 @@ public class Ride {
     private Line line;
 
     @OneToMany(mappedBy = "ride")
-    private List<RideOnDay> rideOnDays;
+    private Collection<RideOnDay> rideOnDays = new ArrayList<RideOnDay>();
 
     protected Ride() {
     }
@@ -130,7 +131,7 @@ public class Ride {
         this.description = description;
     }
 
-    public List<Stop> getStops() {
+    public Collection<Stop> getStops() {
         return stops;
     }
 
@@ -190,7 +191,7 @@ public class Ride {
         set(line);
     }
 
-    public List<RideOnDay> getRideOnDays() {
+    public Collection<RideOnDay> getRideOnDays() {
         return rideOnDays;
     }
 

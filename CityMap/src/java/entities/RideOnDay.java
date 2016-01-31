@@ -43,9 +43,6 @@ import java.util.Date;
 public class RideOnDay {
 
     @Id
-    @Column(name = "ride_id")
-    private int rideID;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Ride_ID", referencedColumnName = "Ride_ID")
     private Ride ride;
@@ -117,11 +114,11 @@ public class RideOnDay {
     public static class RideOnDayId implements Serializable {
 
         @Column(name = "ride_id")
-        private int rideID;
+        private int ride;
         private Date ridestarttime;
 
-        public RideOnDayId(int rideID, Date ridestarttime) {
-            this.rideID = rideID;
+        public RideOnDayId(int ride, Date ridestarttime) {
+            this.ride = ride;
             this.ridestarttime = ridestarttime;
         }
     }

@@ -25,7 +25,8 @@ public class QueryTests extends DBTests {
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
 
-        RideOnDay rideOnDay = rideOnDayRepository.find(1);
+        Date date = cal.getTime();
+        RideOnDay rideOnDay = rideOnDayRepository.find(1, date);
 
         Delay d = delayRepository.create(rideOnDay, 12, "Schneefall");
         em.persist(d);

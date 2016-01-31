@@ -1,6 +1,5 @@
 package entities;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -12,7 +11,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.Date;
 
 
 /**
@@ -35,12 +33,6 @@ import java.util.Date;
 public class Delay {
 
     @Id
-    @Column(name = "ride_id")
-    private int ride;
-
-    @Id
-    private Date ridestarttime;
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(name = "RIDE_ID", referencedColumnName = "RIDE_ID"),
@@ -90,13 +82,10 @@ public class Delay {
 
     public static class DelayId implements Serializable {
 
-        @Column(name = "ride_id")
-        private int ride;
-        private Date ridestarttime;
+        private RideOnDay.RideOnDayId rideOnDay;
 
-        public DelayId(int ride, Date ridestarttime) {
-            this.ride = ride;
-            this.ridestarttime = ridestarttime;
+        public DelayId(RideOnDay.RideOnDayId rideOnDay) {
+            this.rideOnDay = rideOnDay;
         }
     }
 }

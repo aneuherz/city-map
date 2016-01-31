@@ -51,10 +51,13 @@ public class EntityAssert {
     }
 
     public static void assertEquals(Station expected, Station actual) {
-        Assert.assertEquals(expected.getRides(), actual.getRides());
-        Assert.assertEquals(expected.getDescription(), actual.getDescription());
-        Assert.assertEquals(expected.getStationID(), actual.getStationID());
-        Assert.assertEquals(expected.getVehicles(), actual.getVehicles());
+        if (null != expected && null != actual) {
+            if (null != actual.getStops())
+                Assert.assertEquals(expected.getRides(), actual.getRides());
+            Assert.assertEquals(expected.getDescription(), actual.getDescription());
+            Assert.assertEquals(expected.getStationID(), actual.getStationID());
+            Assert.assertEquals(expected.getVehicles(), actual.getVehicles());
+        }
     }
 
     public static void assertEquals(Stop expected, Stop actual) {

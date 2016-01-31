@@ -16,23 +16,14 @@ import java.io.Serializable;
 @Table(schema = "CITYMAP")
 @IdClass(Stop.StopId.class)
 public class Stop {
-
-    @Id
-    @Column(name = "ride_id")
-    private int rideID;
-
-    @Id
-    @Column(name = "station_id")
-    private int stationID;
-
     @Id
     @ManyToOne
-    @JoinColumn(name = "RIDE_ID", referencedColumnName = "RIDE_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "RIDE_ID", referencedColumnName = "RIDE_ID")
     private Ride ride;
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "STATION_ID", referencedColumnName = "STATION_ID", insertable = false, updatable = false)
+    @JoinColumn(name = "STATION_ID", referencedColumnName = "STATION_ID")
     private Station station;
 
     @Column(name = "halt_no")
@@ -92,12 +83,16 @@ public class Stop {
     }
 
     static class StopId implements Serializable {
-        int rideID;
-        int stationID;
 
-        public StopId(int rideID, int stationID) {
-            this.rideID = rideID;
-            this.stationID = stationID;
+        @Column(name = "ride_id")
+        int ride;
+
+        @Column(name = "station_id")
+        int station;
+
+        public StopId(int ride, int station) {
+            this.ride = ride;
+            this.station = station;
         }
     }
 

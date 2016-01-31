@@ -1,5 +1,6 @@
 package db_objects;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import repositories.DelayRepository;
 import repositories.LineRepository;
@@ -50,13 +51,16 @@ public abstract class DBTests {
         userTransaction.begin();
         List l = em.createNativeQuery("SELECT citymap.setup();").getResultList();
         userTransaction.commit();
-
-        em.close();
     }
 
-    public static void teardown(){
+    public static void teardown() {
         userTransaction.begin();
         em.createNativeQuery("SELECT citymap.teardown();").getResultList();
         userTransaction.commit();
+    }
+
+    @AfterClass
+    public static void close() {
+        em.close();
     }
 }
