@@ -9,6 +9,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,19 +47,59 @@ public class Station {
         this.description = description;
     }
 
-    public void addRide(Ride ride, int halt_no, int timetonextstop, int waittime) {
-        Stop stop = new Stop();
-        stop.setRide(ride);
-        stop.setHaltNo(halt_no);
-        stop.setRideID(ride.getRideID());
-        stop.setStationID(this.getStationID());
-        stop.setStation(this);
-        stop.setTimetonextstop(timetonextstop);
-        stop.setWaittime(waittime);
+    public Station(String description) {
+        this.description = description;
+    }
 
-        this.stops.add(stop);
-        // Also add the association object to the employee.
-        ride.getStops().add(stop);
+    void add(Vehicle vehicle) {
+        if (vehicles.contains(vehicle))
+            return;
+
+        vehicles.add(vehicle);
+    }
+
+    public void add(Ride ride, int haltNo, int waittime, int timetonextstop) {
+        Stop stop = new Stop(this, ride, haltNo, waittime, timetonextstop);
+
+        if (stops.contains(stop))                 // don't set again
+            return;
+
+        stops.add(stop);
+        ride.add(stop);
+    }
+
+    public int getHaltNo(Ride ride) throws IllegalStateException {
+        for (Stop stop : stops) {
+            if (ride.equals(stop.getRide()))
+                return stop.getHaltNo();
+        }
+        return 0;
+    }
+
+    public int getWaittime(Ride ride) throws IllegalStateException {
+        for (Stop stop : stops) {
+            if (ride.equals(stop.getRide()))
+                return stop.getWaittime();
+        }
+        return 0;
+    }
+
+    public int getTimetonextstop(Ride ride) throws IllegalStateException {
+        for (Stop stop : stops) {
+            if (ride.equals(stop.getRide()))
+                return stop.getTimetonextstop();
+        }
+        return 0;
+    }
+
+    public List<Ride> getRides() {
+        List<Ride> rides = new ArrayList<Ride>();
+
+        for (Stop stop : stops) {
+            Ride ride = stop.getRide();
+            rides.add(ride);
+        }
+        return rides;
     }
 
     public int getStationID() {
@@ -77,20 +118,8 @@ public class Station {
         this.description = description;
     }
 
-    public List<Stop> getStops() {
-        return stops;
-    }
-
-    public void setStops(List<Stop> stops) {
-        this.stops = stops;
-    }
-
     public List<Vehicle> getVehicles() {
         return vehicles;
-    }
-
-    public void setVehicles(List<Vehicle> vehicles) {
-        this.vehicles = vehicles;
     }
 
     @Override

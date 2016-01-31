@@ -1,11 +1,14 @@
 package db_objects;
 
 import entities.Delay;
+import entities.RideOnDay;
+import entities.Station;
+import entities.Vehicle;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,10 +24,10 @@ public class QueryTests extends DBTests {
         cal.set(Calendar.MINUTE, 33);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
-        String date = dayAndTimeSdf.format(cal.getTime());
 
-        Timestamp testDate = Timestamp.valueOf(date);
-        Delay d = delayRepository.create(1, testDate, 12, "Schneefall");
+        RideOnDay rideOnDay = rideOnDayRepository.find(1);
+
+        Delay d = delayRepository.create(rideOnDay, 12, "Schneefall");
         em.persist(d);
         userTransaction.commit();
 
@@ -35,7 +38,29 @@ public class QueryTests extends DBTests {
 
     @Test
     public void findAllStationsByRideID() {
+        List<Station> stationLine = stationRepository.findAllStationsByRideID(1);
+        Assert.assertEquals(7, stationLine.size());
+    }
 
+    @Test
+    public void findAllVehicleByStation() {
+        List<Vehicle> vehiclesByStation = vehicleRepository.findAllVehicleByStationID(1);
+        Assert.assertEquals(2, vehiclesByStation.size());
+    }
+
+    @Test
+    public void findNextRide() {
+        Date date = new Date();
+
+        List<RideOnDay> nextRideOnDay = rideOnDayRepository.findNextRide(1, date);
+
+    }
+
+    @Test
+    public void findAllRidesOnSpecificDateByLine() {
+        Date date = new Date();
+
+        List<RideOnDay> nextRideOnDay = rideOnDayRepository.findAllRidesOnSpecificDateByLine(3, date);
     }
 
 }

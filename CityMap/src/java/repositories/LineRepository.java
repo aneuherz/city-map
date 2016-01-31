@@ -1,7 +1,7 @@
 package repositories;
 
 import entities.Line;
-import spize.persistence.Persistence;
+import entities.Vehicle;
 
 /**
  * Created by Edi on 10/01/16.
@@ -15,27 +15,16 @@ public class LineRepository extends persistence.Repository<Line>
     }
 
 
-    public Line create (String description, int vehicle_id)
-    {
-        Line line = new Line (description, vehicle_id);
+    public Line create(String description, Vehicle vehicle) {
+        Line line = new Line(description, vehicle);
 
-        entityManager.persist (line);
+        entityManager.persist(line);
 
         return line;
     }
 
-    public Line find (int id){
+    public Line find(int id) {
         return entityManager.find(Line.class, id);
     }
-
-    void reset ()
-    {
-        Persistence.resetTable    (schema, table);
-        Persistence.resetSequence (schema, sequence);
-    }
-
-    static final String schema   = "citymap";
-    static final String table    = "line";
-    static final String sequence = "LINE_ID_SEQ";
 
 }

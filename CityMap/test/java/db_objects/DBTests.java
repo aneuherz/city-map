@@ -1,6 +1,5 @@
 package db_objects;
 
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import repositories.DelayRepository;
 import repositories.LineRepository;
@@ -8,7 +7,6 @@ import repositories.RideOnDayRepository;
 import repositories.RideRepository;
 import repositories.RideTypeRepository;
 import repositories.StationRepository;
-import repositories.StopRepository;
 import repositories.VehicleRepository;
 
 import javax.persistence.EntityManager;
@@ -31,7 +29,6 @@ public abstract class DBTests {
     protected static RideOnDayRepository rideOnDayRepository;
     protected static RideTypeRepository rideTypeRepository;
     protected static StationRepository stationRepository;
-    protected static StopRepository stopRepository;
     protected static VehicleRepository vehicleRepository;
     protected static SimpleDateFormat dayAndTimeSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -45,24 +42,21 @@ public abstract class DBTests {
         rideOnDayRepository = new RideOnDayRepository();
         rideTypeRepository = new RideTypeRepository();
         stationRepository = new StationRepository();
-        stopRepository = new StopRepository();
         vehicleRepository = new VehicleRepository();
         userTransaction = em.getTransaction();
 
-        userTransaction.begin();
-        em.createNativeQuery("SELECT citymap.teardown();").getResultList();
-        userTransaction.commit();
+        teardown();
 
         userTransaction.begin();
         List l = em.createNativeQuery("SELECT citymap.setup();").getResultList();
         userTransaction.commit();
+
+        em.close();
     }
 
-    @AfterClass
-    public static void teardown() {
+    public static void teardown(){
         userTransaction.begin();
         em.createNativeQuery("SELECT citymap.teardown();").getResultList();
         userTransaction.commit();
-        em.close();
     }
 }

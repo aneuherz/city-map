@@ -1,7 +1,9 @@
 package repositories;
 
 import entities.Station;
-import spize.persistence.Persistence;
+
+import javax.persistence.TypedQuery;
+import java.util.List;
 
 /**
  * Created by Edi on 10/01/16.
@@ -15,23 +17,19 @@ public class StationRepository extends persistence.Repository<Station>
     }
 
 
-    public Station create (int stationID, String description)
-    {
-        Station station = new Station (stationID, description);
+    public Station create(String description) {
+        Station station = new Station(description);
 
-        entityManager.persist (station);
+        entityManager.persist(station);
 
         return station;
     }
 
-    void reset ()
-    {
-        Persistence.resetTable    (schema, table);
-        //Persistence.resetSequence (schema, sequence);
+    public List<Station> findAllStationsByRideID(int rideID) {
+        TypedQuery<Station> query = entityManager.createNamedQuery(
+                "Station.findAllStationsByRideID", Station.class);
+        query.setParameter("rideID", rideID);
+        return query.getResultList();
     }
-
-    static final String schema   = "citymap";
-    static final String table    = "station";
-    //static final String sequence = "employee_id_seq";
 
 }

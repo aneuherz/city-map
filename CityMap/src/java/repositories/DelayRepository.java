@@ -1,7 +1,7 @@
 package repositories;
 
 import entities.Delay;
-import spize.persistence.Persistence;
+import entities.RideOnDay;
 
 import javax.persistence.TypedQuery;
 import java.util.Date;
@@ -19,37 +19,27 @@ public class DelayRepository extends persistence.Repository<Delay>
     }
 
 
-    public Delay create (int ride_id, Date ridestarttime, int delayinminutes, String reason)
-    {
-        Delay delay = new Delay (ride_id, ridestarttime, delayinminutes, reason);
+    public Delay create(RideOnDay rideOnDay, int delayinminutes, String reason) {
+        Delay delay = new Delay(rideOnDay, delayinminutes, reason);
 
-        entityManager.persist (delay);
+        entityManager.persist(delay);
 
         return delay;
     }
 
-    public Delay findByIdAndDate (int id, Date date){
-        TypedQuery<Delay> query = entityManager.createNamedQuery (
-                "Delay.findByIdAndDate", Delay.class );
-        query.setParameter ("rideID", id);
+    public Delay findByIdAndDate(int id, Date date) {
+        TypedQuery<Delay> query = entityManager.createNamedQuery(
+                "Delay.findByIdAndDate", Delay.class);
+        query.setParameter("rideID", id);
         query.setParameter("ridestarttime", date);
         return query.getSingleResult();
     }
 
-    public List<Delay> findAllDelaysByLineID (int lineID)
-    {
-        TypedQuery<Delay> query = entityManager.createNamedQuery (
-                "Delay.findAllDelaysByLineID", Delay.class );
-        query.setParameter ("lineID", lineID);
+    public List<Delay> findAllDelaysByLineID(int lineID) {
+        TypedQuery<Delay> query = entityManager.createNamedQuery(
+                "Delay.findAllDelaysByLineID", Delay.class);
+        query.setParameter("lineID", lineID);
         return query.getResultList();
     }
-
-    void reset ()
-    {
-        Persistence.resetTable    (schema, table);
-    }
-
-    static final String schema   = "citymap";
-    static final String table    = "delay";
 
 }

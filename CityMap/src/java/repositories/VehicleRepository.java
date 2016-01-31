@@ -1,7 +1,9 @@
 package repositories;
 
 import entities.Vehicle;
-import spize.persistence.Persistence;
+
+import javax.persistence.TypedQuery;
+import java.util.List;
 
 /**
  * Created by Edi on 10/01/16.
@@ -9,29 +11,22 @@ import spize.persistence.Persistence;
 public class VehicleRepository extends persistence.Repository<Vehicle>
         implements persistence.IRepository {
 
-
     public VehicleRepository() {
         super(Vehicle.class);
     }
 
+    public Vehicle create(String description) {
+        Vehicle station = new Vehicle(description);
 
-    public Vehicle create (int vehicleID, String description)
-    {
-        Vehicle station = new Vehicle (vehicleID, description);
-
-        entityManager.persist (station);
+        entityManager.persist(station);
 
         return station;
     }
 
-    void reset ()
-    {
-        Persistence.resetTable    (schema, table);
-        //Persistence.resetSequence (schema, sequence);
+    public List<Vehicle> findAllVehicleByStationID(int stationID) {
+        TypedQuery<Vehicle> query = entityManager.createNamedQuery(
+                "Vehicle.findAllVehicleByStationID", Vehicle.class);
+        query.setParameter("stationID", stationID);
+        return query.getResultList();
     }
-
-    static final String schema   = "citymap";
-    static final String table    = "vehicle";
-    //static final String sequence = "employee_id_seq";
-
 }

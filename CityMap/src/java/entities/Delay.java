@@ -4,14 +4,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.PrimaryKeyJoinColumns;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import java.io.Serializable;
 import java.util.Date;
 
 
@@ -23,56 +23,42 @@ import java.util.Date;
                 query = "SELECT d FROM Delay d " +
                         "JOIN d.rideOnDay rod " +
                         "JOIN rod.ride r " +
-                        "WHERE r.lineID=:lineID"),
+                        "WHERE r.line.lineID=:lineID"),
         @NamedQuery(name = "Delay.findByIdAndDate",
                 query = "SELECT d FROM Delay d " +
-                        "WHERE d.rideID=:rideID " +
-                        "AND d.ridestarttime=:ridestarttime")
+                        "WHERE d.rideOnDay.ride.rideID=:rideID " +
+                        "AND d.rideOnDay.ridestarttime=:ridestarttime")
 })
 @Entity
 @Table(schema = "CITYMAP")
+@IdClass(Delay.DelayId.class)
 public class Delay {
-    @Id
-    @Column(name = "ride_id")
-    private int rideID;
 
     @Id
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "ride_id")
+    private int ride;
+
+    @Id
     private Date ridestarttime;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumns({
+            @JoinColumn(name = "RIDE_ID", referencedColumnName = "RIDE_ID"),
+            @JoinColumn(name = "ridestarttime", referencedColumnName = "ridestarttime")
+    })
+    private RideOnDay rideOnDay;
 
     private int delayinminutes;
 
     private String reason;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumns({@PrimaryKeyJoinColumn(name = "RIDE_ID", referencedColumnName = "RIDE_ID"),
-            @PrimaryKeyJoinColumn(name = "ridestarttime", referencedColumnName = "ridestarttime")})
-    private RideOnDay rideOnDay;
-
     protected Delay() {
     }
 
-    public Delay(int rideID, Date ridestarttime, int delayinminutes, String reason) {
-        this.rideID = rideID;
-        this.ridestarttime = ridestarttime;
+    public Delay(RideOnDay rideOnDay, int delayinminutes, String reason) {
+        this.rideOnDay = rideOnDay;
         this.delayinminutes = delayinminutes;
         this.reason = reason;
-    }
-
-    public int getRideID() {
-        return rideID;
-    }
-
-    public void setRideID(int rideID) {
-        this.rideID = rideID;
-    }
-
-    public Date getRidestarttime() {
-        return ridestarttime;
-    }
-
-    public void setRidestarttime(Date ridestarttime) {
-        this.ridestarttime = ridestarttime;
     }
 
     public int getDelayinminutes() {
@@ -95,13 +81,22 @@ public class Delay {
         return rideOnDay;
     }
 
-    public void setRideOnDay(RideOnDay rideOnDay) {
-        this.rideOnDay = rideOnDay;
-    }
 
     @Override
     public boolean equals(Object o) {
-        return o instanceof Delay && ((Delay) o).rideID == rideID
-                && ((Delay) o).ridestarttime == ridestarttime;
+        return o instanceof Delay && ((Delay) o).getRideOnDay().getRide().getRideID() == rideOnDay.getRide().getRideID()
+                && ((Delay) o).getRideOnDay().getRidestarttime() == rideOnDay.getRidestarttime();
+    }
+
+    public static class DelayId implements Serializable {
+
+        @Column(name = "ride_id")
+        private int ride;
+        private Date ridestarttime;
+
+        public DelayId(int ride, Date ridestarttime) {
+            this.ride = ride;
+            this.ridestarttime = ridestarttime;
+        }
     }
 }

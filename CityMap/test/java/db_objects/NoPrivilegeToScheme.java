@@ -23,6 +23,7 @@ public class NoPrivilegeToScheme extends DBTests {
             userTransaction.commit();
         }
         catch (RollbackException ex){
+            userTransaction.rollback();
             status = true;
         }
         Assert.assertEquals(true,status);

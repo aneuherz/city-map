@@ -11,12 +11,13 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
 
-@NamedQuery(name = "Vehicle.findAllVehicleByStation",
-query = "SELECT v FROM Vehicle v " +
-        "JOIN v.stations s " +
-        "WHERE s.stationID=:stationID")
+@NamedQuery(name = "Vehicle.findAllVehicleByStationID",
+        query = "SELECT v FROM Vehicle v " +
+                "JOIN v.stations s " +
+                "WHERE s.stationID=:stationID")
 @Entity
 @SequenceGenerator(name = "VehicleIdGenerator", schema = "CITYMAP",
         sequenceName = "VEHICLE_ID_SEQ", allocationSize = 1)
@@ -30,12 +31,12 @@ public class Vehicle {
     private String description;
 
     @OneToMany(mappedBy = "vehicle")
-    private List<Line> lines;
+    private Collection<Line> lines = new ArrayList<Line>();
 
     @ManyToMany
-    @JoinTable(joinColumns = @JoinColumn(name = "VEHICLE_ID"),
+    @JoinTable(schema = "CITYMAP", joinColumns = @JoinColumn(name = "VEHICLE_ID"),
             inverseJoinColumns = @JoinColumn(name = "STATION_ID"))
-    private List<Station> stations;
+    private Collection<Station> stations = new ArrayList<Station>();
 
     protected Vehicle() {
     }
@@ -45,11 +46,19 @@ public class Vehicle {
         this.description = description;
     }
 
-    public void addLines(Line line) {
-        this.lines.add(line);
-        if (line.getVehicle() != this) {
-            line.setVehicle(this);
-        }
+    public Vehicle(String description) {
+        this.description = description;
+    }
+
+    void add(Line line) {
+        if (lines.contains(line))
+            return;
+
+        lines.add(line);
+    }
+
+    void remove(Line line) {
+        lines.remove(line);
     }
 
     public int getVehicleID() {
@@ -58,6 +67,15 @@ public class Vehicle {
 
     public void setVehicleID(int vehicleID) {
         this.vehicleID = vehicleID;
+    }
+
+    public void add(Station station) {
+        if (stations.contains(station))
+            return;
+
+        stations.add(station);
+
+        station.add(this);
     }
 
     public String getDescription() {
@@ -69,20 +87,12 @@ public class Vehicle {
     }
 
 
-    public List<Line> getLines() {
+    public Collection<Line> getLines() {
         return lines;
     }
 
-    public void setLines(List<Line> lines) {
-        this.lines = lines;
-    }
-
-    public List<Station> getStations() {
+    public Collection<Station> getStations() {
         return stations;
-    }
-
-    public void setStations(List<Station> stations) {
-        this.stations = stations;
     }
 
     @Override

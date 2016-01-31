@@ -1,7 +1,9 @@
 package repositories;
 
+import entities.Line;
 import entities.Ride;
-import spize.persistence.Persistence;
+import entities.RideOnDay;
+import entities.RideType;
 
 /**
  * Created by Edi on 10/01/16.
@@ -15,23 +17,11 @@ public class RideRepository extends persistence.Repository<Ride>
     }
 
 
-    public Ride create (int ride_id, String description, int line_id, int ridetype_id)
-    {
-        Ride ride = new Ride (ride_id, description, line_id, ridetype_id);
+    public Ride create(String description, Line line, RideType rideType, RideOnDay rideOnDay) {
+        Ride ride = new Ride(description, line, rideType, rideOnDay);
 
-        entityManager.persist (ride);
+        entityManager.persist(ride);
 
         return ride;
     }
-
-    void reset ()
-    {
-        Persistence.resetTable    (schema, table);
-        //Persistence.resetSequence (schema, sequence);
-    }
-
-    static final String schema   = "citymap";
-    static final String table    = "ride";
-    //static final String sequence = "employee_id_seq";
-
 }

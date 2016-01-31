@@ -4,8 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import java.io.Serializable;
 
@@ -18,19 +18,21 @@ import java.io.Serializable;
 public class Stop {
 
     @Id
-    @Column(name = "station_ID")
-    private long stationID;
+    @Column(name = "ride_id")
+    private int rideID;
 
     @Id
-    @Column(name = "ride_ID")
-    private long rideID;
+    @Column(name = "station_id")
+    private int stationID;
 
+    @Id
     @ManyToOne
-    @PrimaryKeyJoinColumn(name = "RIDE_ID", referencedColumnName = "RIDE_ID")
+    @JoinColumn(name = "RIDE_ID", referencedColumnName = "RIDE_ID", insertable = false, updatable = false)
     private Ride ride;
 
+    @Id
     @ManyToOne
-    @PrimaryKeyJoinColumn(name = "STATION_ID", referencedColumnName = "STATION_ID")
+    @JoinColumn(name = "STATION_ID", referencedColumnName = "STATION_ID", insertable = false, updatable = false)
     private Station station;
 
     @Column(name = "halt_no")
@@ -43,36 +45,20 @@ public class Stop {
     protected Stop() {
     }
 
-    public long getStationID() {
-        return stationID;
-    }
-
-    public void setStationID(long stationID) {
-        this.stationID = stationID;
-    }
-
-    public long getRideID() {
-        return rideID;
-    }
-
-    public void setRideID(long rideID) {
-        this.rideID = rideID;
+    Stop(Station station, Ride ride, int haltNo, int waittime, int timetonextstop) {
+        this.ride = ride;
+        this.station = station;
+        this.haltNo = haltNo;
+        this.waittime = waittime;
+        this.timetonextstop = timetonextstop;
     }
 
     public Ride getRide() {
         return ride;
     }
 
-    public void setRide(Ride ride) {
-        this.ride = ride;
-    }
-
     public Station getStation() {
         return station;
-    }
-
-    public void setStation(Station station) {
-        this.station = station;
     }
 
     public int getHaltNo() {
@@ -101,13 +87,18 @@ public class Stop {
 
     @Override
     public boolean equals(Object o) {
-        return o instanceof Stop && ((Stop) o).stationID == stationID
-                && ((Stop) o).rideID == rideID;
+        return o instanceof Stop && ((Stop) o).getStation().getStationID() == station.getStationID()
+                && ((Stop) o).getRide().getRideID() == ride.getRideID();
     }
 
     static class StopId implements Serializable {
-        long stationID;
-        long rideID;
+        int rideID;
+        int stationID;
+
+        public StopId(int rideID, int stationID) {
+            this.rideID = rideID;
+            this.stationID = stationID;
+        }
     }
 
 }

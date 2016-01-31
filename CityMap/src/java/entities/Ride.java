@@ -1,15 +1,17 @@
 package entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,20 +28,16 @@ public class Ride {
     private int rideID;
 
     private String description;
-    @Column(name = "line_id")
-    private int lineID;
-    @Column(name = "ridetype_id")
-    private int rideTypeID;
 
-    @OneToMany(mappedBy = "ride")
+    @OneToMany(mappedBy = "ride", cascade = CascadeType.PERSIST)
     private List<Stop> stops;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn(name = "RIDETYPE_ID")
+    @JoinColumn(name = "RIDETYPE_ID")
     private RideType rideType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn(name = "LINE_ID")
+    @JoinColumn(name = "LINE_ID")
     private Line line;
 
     @OneToMany(mappedBy = "ride")
@@ -48,25 +46,72 @@ public class Ride {
     protected Ride() {
     }
 
-    public Ride(int rideID, String description, int lineID, int ridetypeID) {
+    public Ride(int rideID, String description, Line line, RideType ridetype, RideOnDay rideOnDay) {
         this.rideID = rideID;
         this.description = description;
-        this.lineID = lineID;
-        this.rideTypeID = ridetypeID;
+        set(line);
+        set(ridetype);
+        rideOnDays.add(rideOnDay);
     }
 
-    public Ride(String description, int lineID, int ridetypeID) {
-        this.rideID = rideID;
+    public Ride(String description, Line line, RideType ridetype, RideOnDay rideOnDay) {
         this.description = description;
-        this.lineID = lineID;
-        this.rideTypeID = ridetypeID;
+        set(line);
+        set(ridetype);
+        rideOnDays.add(rideOnDay);
     }
 
-    public void addRideOnDay(RideOnDay rideOnDay) {
-        this.rideOnDays.add(rideOnDay);
-        if (rideOnDay.getRide() != this) {
-            rideOnDay.setRide(this);
+    void add(RideOnDay rideOnDay) {
+        if (rideOnDays.contains(rideOnDay))
+            return;
+
+        rideOnDays.add(rideOnDay);
+    }
+
+
+    public int getHaltNo(Station station) throws IllegalStateException {
+        for (Stop stop : stops) {
+            if (station.equals(stop.getStation()))
+                return stop.getHaltNo();
         }
+        return 0;
+    }
+
+    public int getWaittime(Station station) throws IllegalStateException {
+        for (Stop stop : stops) {
+            if (station.equals(stop.getStation()))
+                return stop.getWaittime();
+        }
+        return 0;
+    }
+
+    public int getTimetonextstop(Station station) throws IllegalStateException {
+        for (Stop stop : stops) {
+            if (station.equals(stop.getStation()))
+                return stop.getTimetonextstop();
+        }
+        return 0;
+    }
+
+    public List<Station> getStations() {
+        List<Station> stations = new ArrayList<Station>();
+
+        for (Stop stop : stops) {
+            Station station = stop.getStation();
+            stations.add(station);
+        }
+        return stations;
+    }
+
+    void add(Stop stop) {
+        if (stops.contains(stop))
+            return;
+
+        stops.add(stop);
+    }
+
+    void remove(RideOnDay rideOnDay) {
+        rideOnDays.remove(rideOnDay);
     }
 
     public int getRideID() {
@@ -85,22 +130,6 @@ public class Ride {
         this.description = description;
     }
 
-    public int getLineID() {
-        return lineID;
-    }
-
-    public void setLineID(int lineID) {
-        this.lineID = lineID;
-    }
-
-    public int getRideTypeID() {
-        return rideTypeID;
-    }
-
-    public void setRideTypeID(int rideTypeID) {
-        this.rideTypeID = rideTypeID;
-    }
-
     public List<Stop> getStops() {
         return stops;
     }
@@ -113,33 +142,56 @@ public class Ride {
         return rideType;
     }
 
-    public void setRideType(RideType rideType) {
+    public void set(RideType rideType) {
+        if (this.rideType != null)
+            throw new IllegalStateException("Department already set!");
+
         this.rideType = rideType;
 
-        if (!rideType.getRides().contains(this)) {
-            rideType.getRides().add(this);
+        rideType.add(this);
+    }
+
+    public void changeType(RideType rideType) {
+        if (this.rideType != null) {
+            if (rideType.equals(this.rideType))        // no change
+                return;
+
+            this.rideType.remove(this);
+
+            this.rideType = null;
         }
+
+        set(rideType);
     }
 
     public Line getLine() {
         return line;
     }
 
-    public void setLine(Line line) {
+    public void set(Line line) {
+        if (this.line != null)
+            throw new IllegalStateException("Department already set!");
+
         this.line = line;
 
-        if (!line.getRides().contains(this)) {
-            // warning this may cause performance issues if you have a large data set since this operation is O(n)
-            line.getRides().add(this);
+        line.add(this);
+    }
+
+    public void changeRouteTo(Line line) {
+        if (this.line != null) {
+            if (line.equals(this.line))        // no change
+                return;
+
+            this.line.remove(this);
+
+            this.line = null;
         }
+
+        set(line);
     }
 
     public List<RideOnDay> getRideOnDays() {
         return rideOnDays;
-    }
-
-    public void setRideOnDays(List<RideOnDay> rideOnDays) {
-        this.rideOnDays = rideOnDays;
     }
 
     @Override

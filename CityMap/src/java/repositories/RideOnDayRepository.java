@@ -1,9 +1,12 @@
 package repositories;
 
+import entities.Ride;
 import entities.RideOnDay;
-import spize.persistence.Persistence;
 
+import javax.persistence.TypedQuery;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -12,29 +15,59 @@ import java.util.Date;
 public class RideOnDayRepository extends persistence.Repository<RideOnDay>
         implements persistence.IRepository {
 
-
     public RideOnDayRepository() {
         super(RideOnDay.class);
     }
 
+    public RideOnDay create(Ride ride, Date ridestarttime) {
+        RideOnDay rideOnDay = new RideOnDay(ride, ridestarttime);
 
-    public RideOnDay create (int ride_id, Date ridestarttime)
-    {
-        RideOnDay rideOnDay = new RideOnDay (ride_id, ridestarttime);
-
-        entityManager.persist (rideOnDay);
+        entityManager.persist(rideOnDay);
 
         return rideOnDay;
     }
 
-    void reset ()
-    {
-        Persistence.resetTable    (schema, table);
-        //Persistence.resetSequence (schema, sequence);
+    public RideOnDay find(int rideID, Date ridestarttime){
+        RideOnDay.RideOnDayId pk = new RideOnDay.RideOnDayId(rideID, ridestarttime);
+        return entityManager.find(RideOnDay.class, pk);
     }
 
-    static final String schema   = "citymap";
-    static final String table    = "rideonday";
-    //static final String sequence = "employee_id_seq";
+    public List<RideOnDay> findNextRide(int stationID, Date date) {
+        TypedQuery<RideOnDay> query = entityManager.createNamedQuery(
+                "RideOnDay.findNextRide", RideOnDay.class);
+        query.setParameter("stationID", stationID);
+        query.setParameter("ridestarttime", date);
+        return query.getResultList();
+    }
+
+
+    public List<RideOnDay> findAllRidesOnSpecificDateByLine(int lineID, Date date) {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        calendar.set(Calendar.AM_PM, Calendar.AM);
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        Date lowerLimit = calendar.getTime();
+
+        calendar.set(Calendar.AM_PM, Calendar.PM);
+        calendar.set(Calendar.HOUR, 11);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 999);
+
+        Date upperLimit = calendar.getTime();
+
+        TypedQuery<RideOnDay> query = entityManager.createNamedQuery(
+                "RideOnDay.findAllRidesOnSpecificDateByLine", RideOnDay.class);
+        query.setParameter("lineID", lineID);
+        query.setParameter("dayLowerLimit", lowerLimit);
+        query.setParameter("dayUpperLimit", upperLimit);
+        return query.getResultList();
+    }
 
 }

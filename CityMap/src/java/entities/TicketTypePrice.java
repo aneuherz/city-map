@@ -22,7 +22,7 @@ public class TicketTypePrice {
     private long baseprice;
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @PrimaryKeyJoinColumn(name="TICKETTYPE_ID", referencedColumnName = "TICKETTYPE_ID")
+    @JoinColumn(name="TICKETTYPE_ID", referencedColumnName = "TICKETTYPE_ID")
     private TicketType ticketType;
 
     protected TicketTypePrice() {

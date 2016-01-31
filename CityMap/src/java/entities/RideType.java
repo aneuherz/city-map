@@ -7,7 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Created by Edi on 25/11/15.
@@ -25,13 +26,17 @@ public class RideType {
     private String ridetype;
 
     @OneToMany(mappedBy = "rideType")
-    private List<Ride> rides;
+    private Collection<Ride> rides = new ArrayList<Ride>();
 
     protected RideType() {
     }
 
     public RideType(int ridetypeID, String ridetype) {
         this.ridetypeID = ridetypeID;
+        this.ridetype = ridetype;
+    }
+
+    public RideType(String ridetype) {
         this.ridetype = ridetype;
     }
 
@@ -51,20 +56,19 @@ public class RideType {
         this.ridetype = ridetype;
     }
 
-    public void addRide(Ride ride) {
+    void add(Ride ride) {
+        if (rides.contains(ride))
+            return;
 
-        this.rides.add(ride);
-        if (ride.getRideType() != this) {
-            ride.setRideType(this);
-        }
+        rides.add(ride);
     }
 
-    public List<Ride> getRides() {
+    void remove(Ride ride) {
+        rides.remove(ride);
+    }
+
+    public Collection<Ride> getRides() {
         return rides;
-    }
-
-    public void setRides(List<Ride> rides) {
-        this.rides = rides;
     }
 
     @Override
