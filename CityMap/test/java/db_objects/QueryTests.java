@@ -54,7 +54,8 @@ public class QueryTests extends DBTests {
         Date date = new Date();
 
         List<RideOnDay> nextRideOnDay = rideOnDayRepository.findNextRide(1, date);
-
+        Assert.assertEquals(1, nextRideOnDay.size());
+//        Assert.assertEquals();
     }
 
     @Test
@@ -62,6 +63,8 @@ public class QueryTests extends DBTests {
         Date date = new Date();
 
         List<RideOnDay> nextRideOnDay = rideOnDayRepository.findAllRidesOnSpecificDateByLine(3, date);
+//        Assert.assertEquals();
+        Assert.assertEquals(201, nextRideOnDay.size());
     }
 
 }

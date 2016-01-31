@@ -25,8 +25,6 @@ public class CreateTests extends DBTests {
 
    @Test
    public void createDelay() throws ParseException {
-
-       //FIXME: can create delays that are not in ride and also can't find created delay in DB, like wtf?
        Transaction.begin();
 
        RideOnDay rideOnDay = rideOnDayRepository.find(1, dateForRideOnDay());
